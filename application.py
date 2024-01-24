@@ -5,7 +5,7 @@
 # Import relevant libraries
 # *** Need to the delete the irrelevant ones ***
 
-import os
+import sys, os
 
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
@@ -19,7 +19,7 @@ from helpers import apology, login_required
 from datetime import datetime
 
 # Configure application
-app = Flask(__name__)
+app = Flask(__name__) # URL Routing — Home Page
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -47,10 +47,18 @@ if not os.environ.get("API_KEY"):
 # Homepage
 @app.route("/")
 def index():
+    return “Hello World!”
+
+# Main Function, Runs at http://0.0.0.0:8000
+if __name__ == “__main__”:
+ app.run(port=8000)```
+
+"""
+def index():
     # get the homepage of the website.
-    return render_template("index.html")
+    return render_template("index.html")"""
 
-
+"""
 # About
 @app.route("/about")
 def about():
@@ -74,3 +82,4 @@ def errorhandler(e):
 # Listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
+    """
