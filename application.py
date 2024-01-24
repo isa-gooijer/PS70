@@ -70,10 +70,9 @@ def about():
 def intro():
     return render_template("/assignment/01_intro.html")
 
-
 # ERROR HANDLERs
 def errorhandler(e):
-    """Handle error"""
+    "-""Handle error"-""
     if not isinstance(e, HTTPException):
         e = InternalServerError()
     return apology(e.name, e.code)
