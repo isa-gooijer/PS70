@@ -1,5 +1,3 @@
-## test
-
 # From CS50 and medium.com:
 # part 1: https://medium.com/@anupbhande/create-a-static-website-on-github-using-python-and-flask-framework-part-1-e26c0d39bec2
 # part 2: https://medium.com/@anupbhande/create-a-static-website-on-github-using-python-and-flask-part-2-335d6df42def
