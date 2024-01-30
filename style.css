@@ -16,11 +16,12 @@ height: 100%;
   color: grey;
 }
 
+/*
 #nolink img {
   height: 80%;
   width: 100%;
   object-fit: contain;
-}
+}*/
 
 
 /* from: https://www.w3schools.com/css/tryit.asp?filename=trycss_image_gallery_responsive */
@@ -34,7 +35,8 @@ div.gallery:hover {
 
 div.gallery img {
   width: 100%;
-  height: auto;
+  height: 80%;
+  object-fit: contain;
 }
 
 div.desc {
