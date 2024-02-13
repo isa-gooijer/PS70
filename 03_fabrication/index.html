@@ -110,7 +110,27 @@
             I came across were <a href="https://www.instructables.com/Make-Geneva-Wheels-of-Any-Size-in-a-Easier-Way/">Autodesk Instructables</a> 
             and <a href="https://www.youtube.com/watch?v=feA4ZfnTrSc">Geneva Wheel Geometry</a> by <i>J.E. Johnson</i>.
           </p>
-          <p><i>(and maybe this video: <a href="https://www.youtube.com/watch?v=um6TKvwYHgg"></a>Geneva Gear</i>)</p>
+          <p><i>(and maybe this video: <a href="https://www.youtube.com/watch?v=um6TKvwYHgg">Geneva Gear</a>)</i></p>
+          
+          <h3>Measurments</h3>
+          <script src="https://strapdownjs.com/v/0.2/strapdown.js"> </script>
+          <xmp>
+            _from Geneva Wheel Geometry video by J.E. Johnson_
+            Given values:
+            a = drive crank radius
+            n = driven slot quantity
+            p = drive pin diameter
+            t = allowed clearance
+            
+            Calculations:
+            c = center distance = a / sin(180 / n)
+            b = Geneva wheel radius =   √ c² - a²
+            s = slot center length = (a + b) - c
+            w = slot width = p + t
+            y = stop arc radius =  a - ( p 1.5 )
+            z = stop disc radius = y - t
+            v = clearance arc = bz / a
+          </xmp>
         </div>
       </div>
     </div>
