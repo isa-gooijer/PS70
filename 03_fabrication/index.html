@@ -177,6 +177,31 @@
           <p><video controls class="img-fluid" style="width:50%; height:50%;">
             <source src="./Geneva drive - motor .MOV" type="video/mp4">
           </video></p>
+          <p><b>ARDUINO CODE:</b></p>
+          <xmp>
+            const int A1A = 3;  // define pin 3 for A-1A (PWM Speed)
+            const int A1B = 4;  // define pin 4 for A-1B (direction)
+
+            void setup() {
+              pinMode(A1A, OUTPUT);     // specify these pins as outputs
+              pinMode(A1B, OUTPUT);
+              analogWrite(A1A, 0);   // start with the motors off 
+              digitalWrite(A1B, LOW);
+            }
+
+            void loop() {
+              // start the motor at a low speed
+              analogWrite(A1A, 150);
+              digitalWrite(A1B, LOW);
+              delay(2000);              // allow the motor to run for 4 seconds
+
+              // stop the motor
+              analogWrite(A1A, 0); 
+              digitalWrite(A1B, LOW);  // setting both pins LOW stops the motor
+              delay(3000);             // keep the motor off for 2 seconds
+
+            }
+          </xmp>
         </div>
       </div>
     </div>
