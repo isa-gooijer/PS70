@@ -21,6 +21,10 @@
     <link href="../bootstrap.css" rel="stylesheet">
     <link href="../style.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script> 
     <!-- Title of page -->
     <title>PS70_03_Fabrication</title>
   </head>
@@ -178,7 +182,7 @@
             <source src="./Geneva drive - motor .MOV" type="video/mp4">
           </video></p>
           <p><b>ARDUINO CODE:</b></p>
-          <xmp>
+          <pre><code>
             const int A1A = 3;  // define pin 3 for A-1A (PWM Speed)
             const int A1B = 4;  // define pin 4 for A-1B (direction)
 
@@ -201,7 +205,7 @@
               delay(3000);             // keep the motor off for 2 seconds
 
             }
-          </xmp>
+          </code></pre>
         </div>
       </div>
     </div>
