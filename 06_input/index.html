@@ -104,12 +104,53 @@
         <div class="container-fluid text-start">
             <div class="row justify-content-center">
                 <div class="col-8">
-                    <h2>Sensors!</h2>
-                    <p>set up a temperature and humidity sensor which I can use for my final project</p>
+                    <h2>INPUT DEVICES!</h2>
+                    <p>Set up a temperature and humidity sensor which I can use for my final project</p>
                     <ul>
                         <li><a href="https://sensorkit.arduino.cc/sensorkit/module/lessons/lesson/08-the-temperature-sensor" target="_blank">DHT11 sensor</a></li>
                         <li><a href="https://www.instructables.com/TMP36-Temperature-Sensor-Arduino-Tinkercad/">Tmp36 Tinkercad</a></li>
                     </ul>
+                    <p>Set up a <b>soil moisture sensor</b> which I can use for my final project:</p>
+                        The LED turns of when the moisture level is below a certain point
+                    <p><video controls class="img-fluid" style="width:50%; height:50%;">
+                        <source src=".Moisture_sensor.MOV" type="video/mp4">
+                    </video></p>
+                    <script src="https://strapdownjs.com/v/0.2/strapdown.js"> </script>
+                    <xmp>
+                        int LED = 3;
+                        int SM_Sensor = A0;
+                        int Max_Moist = 850;
+                        int MoistureValue;
+                        int Moist_perc; 
+
+                        void setup() {
+                        pinMode(LED, OUTPUT); // LED pin, digital signal
+                        pinMode (SM_Sensor, INPUT); // Soil Moisture Sensor pin, analog signal
+                        Serial.begin(9600);
+                        }
+
+                        void   loop() {
+                        MoistureValue = analogRead(SM_Sensor); //Keep renewing the readings for the current moisture level
+                        delay(1000); //Short delay to not overload the program
+                        Serial.println(MoistureValue); //Print moisture level: 0-1023
+
+                        Moist_perc = ((float)MoistureValue/(float)Max_Moist) * 100; // get moisture value in percentage:  current/max * 100
+                        delay(1000);
+                        Serial.println(Moist_perc);  //Print moisture percentage: 0-100
+
+                        if(MoistureValue <= 500){ //If the moisture is below 10%
+                            digitalWrite(LED, HIGH);
+                            delay(100);
+                        }
+                        else {
+                            digitalWrite(LED, LOW);
+                            delay(100);
+                        }
+                        }
+
+                        //850 is max value --> 100%
+                        // 0 --> 100%
+                    </xmp>
                     <p>Make a capacitive sensor to measure how much water is left in the water tank that's going to be used for the 
                         watering system. When the tank is (nearly) empty LED turns on.</p>
                 </div>
