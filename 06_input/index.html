@@ -152,8 +152,57 @@
                 //850 is max value --> 100%
                 // 0 --> 100%
                     </xmp>
-                    <p>Make a capacitive sensor to measure how much water is left in the water tank that's going to be used for the 
-                        watering system. When the tank is (nearly) empty LED turns on.</p>
+                <p>Make a capacitive sensor to measure how much water is left in the water tank that's going to be used for the 
+                    watering system. When the tank is (nearly) empty LED turns on.</p>
+                <h3>UPDATE: 03/19/2024</h3>
+                <p>I tried to get the soil moisture sensor to work without using delay(). I used the millis() function
+                    and created an arduino class for this. At first it didn't work, but that was because I had
+                    to include <i>Serial.begin(9600);</i> in the void setup(). After that it worked.</p>
+                <u>New Arduino Code:</u>
+                <xmp>
+                // SOIL MOISTURE - LED --> OOP & W/O DELAY
+
+                class SoilMoist {
+                // CLASS MEMBER VARIABLES
+                // variables that are initialized at startup
+                int SM_pin; //soil moisture sensor pin
+                int maxMoistValue; // maximum soil moisture value.
+                int interval; // interval at which soil moisture values is read
+                
+                
+                // variables that maintain current state
+                int currentMoistValue; // current soil moisture value.
+                unsigned long lastUpdate; // last update (in milliseconds)
+
+                public:
+                SoilMoist(int pin, int max, int Int){
+                    SM_pin = pin;
+                    maxMoistValue = max;
+                    interval = Int;
+
+                    lastUpdate = 0; // start clock at zero
+                }
+
+                void Update(){
+                    // check to see if it's time to read of the soil moisture value
+                    if(millis() - lastUpdate >= interval){
+                    lastUpdate = millis();
+                    currentMoistValue = analogRead(SM_pin);
+                    Serial.println(currentMoistValue);
+                    }
+                }
+                };
+
+                SoilMoist sm1(A0, 850, 1000); // pin = A0; max = 850; interval = 1000 ms.
+
+                void setup() {
+                Serial.begin(9600);
+                }
+
+                void loop() {
+                sm1.Update();
+                }
+                </xmp>
                 </div>
             </div>
         </div>
