@@ -135,7 +135,8 @@
                 delay(1000); //Short delay to not overload the program
                 Serial.println(MoistureValue); //Print moisture level: 0-1023
 
-                Moist_perc = ((float)MoistureValue/(float)Max_Moist) * 100; // get moisture value in percentage:  current/max * 100
+                Moist_perc = ((float)MoistureValue/(float)Max_Moist) * 100;
+                // get moisture value in percentage:  current/max * 100
                 delay(1000);
                 Serial.println(Moist_perc);  //Print moisture percentage: 0-100
 
