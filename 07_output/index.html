@@ -1,1 +1,139 @@
+<!DOCTYPE html>
+<!-- Start of html doc -->
+<html lang="en">
+  <!-- Container for meta data -->
+  <head>
+      <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <!-- Mobile-optimized website: https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- JAVASCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- STYlE:
+        Import documentation from Bootstrap; at https://getbootstrap.com/docs/5.3/getting-started/introduction/
+        alternative themes at https://bootswatch.com/ -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Import own CSS style sheet -->
+    <link href="../bootstrap.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script> 
+    <!-- Title of page -->
+    <title>PS70_07_Output</title>
+  </head>
+
+    <body>
+        <div class="container-fluid text-start">
+            <div class="row justify-content-center">
+                <div class="col">
+                    <h1>WEEK 7: Electronic Output Devices</h1>
+                    <h2></h2>
+                    <h4><i>ESP32, Motors and MVP</i></h4>
+                    <b>Assignment:</b>
+                    <a href="https://nathanmelenbrink.github.io/ps70/08_output/index.html" target="_blank">PS70 website - week 7</a>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid text-start">
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <p><b>Minimum Viable Product: </b>Make a serious attempt at the most challenging/intimidating aspect of your final project.
+                    <ol>
+                        <li>1 input + 1 output device.</li>
+                        <li>Write a microcontroller program that integrates at least one input device and one output device. 
+                            Avoid the delay() function and use the C++ class structure.</li>
+                        <li>Use an oscilloscope to discover the time domain at which your output device is operating.
+                            Is it on a fixed clock? What's its speed? Share images and describe your findings.</li>
+                    </ol>
+                    </p> 
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid text-start">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                <h2>MINIMUM VIABLE PRODUCT!</h2>
+                <p>For my MVP I set out to make my first iteration of the watering system of the plant incubator. 
+                    For this I used an Arduino to control a peristaltic pump based on the soil moisture. Below a certain
+                    soil moisture percentage (%) the pump would turn on until the value goes above the threshold again.
+                </p>
+                <p>I avoided delay() by using millis() in my Arduino code and use the class function.</p>
+                <p>I struggled with connecting the peristaltic pump at first because it only had an connection for VCC
+                    and GND, but not for signal. However, Bobby helped me implement a transistor into my circuit and that fixed the problem.
+                </p>
+                <p>Transistor <a href="https://www.vishay.com/docs/91325/irlz14.pdf">Datasheet</a></p>
+                <h4>VIDEO:</h4>
+                
+                <h4>CIRCUIT DIAGRAM:</h4>
+                <img src="" alt="Drawing of Circit diagram">
+                <script src="https://strapdownjs.com/v/0.2/strapdown.js"> </script>
+                <h4>ARDUINO CODE:</h4>
+                <xmp>
+                    // SOIL MOISTURE - LED --> OOP & W/O DELAY
+                    class SoilMoist {
+                    // CLASS MEMBER VARIABLES
+                    // variables that are initialized at startup
+                    int SM_pin; //soil moisture sensor pin
+                    int maxMoistValue; // maximum soil moisture value.
+                    int interval; // interval at which soil moisture values is read
+                    int ledPin; // pin of LED
+                    int pumpPin; // pin of pump
+                    
+                    
+                    // variables that maintain current state
+                    int currentMoistValue; // current soil moisture value.
+                    unsigned long lastUpdate; // last update (in milliseconds)
+                    int Moist_perc; 
+
+                    public:
+                    SoilMoist(int SMpin, int max, int Int){
+                        SM_pin = SMpin;
+                        maxMoistValue = max;
+                        interval = Int;
+                        
+                        ledPin = 3; // pin of LED, 3
+                        pinMode(ledPin, OUTPUT); // set LED pin to an OUTPUT
+                        pumpPin = 8; // pin of pump, 8
+                        pinMode(pumpPin, OUTPUT); // set pump pin to an OUTPUT
+                        lastUpdate = 0; // start clock at zero
+                    }
+
+                    void Update(){
+                        // check to see if it's time to read of the soil moisture value
+                        if(millis() - lastUpdate >= interval){
+                        lastUpdate = millis();
+                        currentMoistValue = analogRead(SM_pin);
+                        Moist_perc = ((float)currentMoistValue/(float)maxMoistValue) * 100;
+                        Serial.println("Sensor Value:" + String(currentMoistValue));
+                        Serial.println("Soil Moisture (%):" + String(Moist_perc));
+
+                        if(Moist_perc <= 30){ //If the moisture is below 10%
+                            digitalWrite(ledPin, HIGH);
+                            digitalWrite(pumpPin, HIGH);
+                        }
+                        else {
+                            digitalWrite(ledPin, LOW);
+                            digitalWrite(pumpPin, LOW);
+                        }
+                        }
+                    }
+                    };
+
+                    SoilMoist sm1(A0, 850, 1000); // pin = A0; max = 850; interval = 1000 ms.
+
+                    void setup() {
+                    Serial.begin(9600);
+                    }
+
+                    void loop() {
+                    sm1.Update();
+                    }
+                </xmp>
+            <h3>NEXT STEPS:</h3>
+    </body>
+</html>
