@@ -23,6 +23,50 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script> 
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script>
+
+        <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g",
+            authDomain: "REPLACE_WITH_YOUR_OWN",
+            databaseURL: "https://ps70week9-default-rtdb.firebaseio.com",
+            projectId: "REPLACE_WITH_YOUR_OWN",
+            storageBucket: "REPLACE_WITH_YOUR_OWN",
+            messagingSenderId: "REPLACE_WITH_YOUR_OWN",
+            appId: "REPLACE_WITH_YOUR_OWN"
+        };
+            // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Get a database reference to our blog
+        var ref = firebase.database().ref("/");
+
+        // make the buttons call the function below 
+        document.getElementById('turn-on').addEventListener('click', turnOn, false);
+        document.getElementById('turn-off').addEventListener('click', turnOff, false);
+
+        function turnOn(){
+            console.log("turning on");
+            ref.update({
+                "LED_STATUS": "ON"
+            });
+        }
+
+        function turnOff(){
+            console.log("turning off");
+            ref.update({
+                "LED_STATUS": "OFF"
+            });
+        }    
+    </script>
+
     <!-- Title of page -->
     <title>PS70_08_CNC</title>
   </head>
@@ -66,50 +110,51 @@
       </div>
     </nav>
 
-     <button id="turn-on" name="turnon">Turn On</button>
-     <button id="turn-off" name="turnoff">Turn Off</button>
-
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-         https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script>
-
-    <script>
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-        apiKey: "AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g",
-        authDomain: "REPLACE_WITH_YOUR_OWN",
-        databaseURL: "https://ps70week9-default-rtdb.firebaseio.com",
-        projectId: "REPLACE_WITH_YOUR_OWN",
-        storageBucket: "REPLACE_WITH_YOUR_OWN",
-        messagingSenderId: "REPLACE_WITH_YOUR_OWN",
-        appId: "REPLACE_WITH_YOUR_OWN"
-    };
-        // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-
-    // Get a database reference to our blog
-    var ref = firebase.database().ref("/");
-
-    // make the buttons call the function below 
-    document.getElementById('turn-on').addEventListener('click', turnOn, false);
-    document.getElementById('turn-off').addEventListener('click', turnOff, false);
-
-    function turnOn(){
-        console.log("turning on");
-        ref.update({
-            "LED_STATUS": "ON"
-        });
-    }
-
-    function turnOff(){
-        console.log("turning off");
-        ref.update({
-            "LED_STATUS": "OFF"
-        });
-    }    
-</script>
-
+    <div class="container-fluid text-center">
+        <div class="row justify-content-center">
+            <div class="col-8">
+              <h1>WEEK 9: Networking and IoT</h1>
+              <h2></h2>
+              <h4><i>ESP32 continued, Firebase, Web Apps</i></h4>
+              <b>Assignment:</b>
+              <a href="https://nathanmelenbrink.github.io/ps70/09_networking/index.html" target="_blank">PS70 website - week 9</a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid text-start">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <p>Work with a partner or group of 3.
+                  <ul>
+                    <li>Program one or more microcontroller(s) to obtain and respond to information from the internet or radio.</li>
+                    <li>Your project should include at least one input and one output.</li>
+                  </ul>
+                </p> 
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid text-start">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h2>Control a LED from This Website!</h2>
+                <p>I followed the <a href="https://randomnerdtutorials.com/esp32-firebase-realtime-database/" target="_blank">Random Nerd Tutorial</a> 
+                on using a ESP32 to write and read information to and from a realtime database on Firebase. Reading through 
+                the tutorial, following the steps and using the code provided by the authors worked. However, it was a bit 
+                harder to adjust Nathan's code on the LED to make it work. I mainly used the set up from the NerdTutorial code. 
+                However, I also had to switch <i>Firebase.set</i> to <i>Firebase.RTDB.set</i>. Furthermore, I also figure out I 
+                had to add a '&' before the firebase data object in the firebase.RTDB.set() and Firebase.RTDB.get() functions. <br>
+                <b>Example:</b> Firebase.RTDB.set(&firebaseData, "/LED_STATUS", "OFF"); <br>
+                After those changes the code worked and I was able to control the LED by manually changing my variable in the 
+                Realtime Database Console.</p>
+                <p>INSERT VIDEO</p>
+                <p></p>
+                <p>Next, I used Nathan's code for ON and OFF buttons on webpages and included my own url and APi key. See the 
+                    buttons below.
+                    <button id="turn-on" name="turnon">Turn On</button>
+                    <button id="turn-off" name="turnoff">Turn Off</button>
+                </p>
+                <p>INSERT VIDEO OF IT WORKING</p>
+            </div>
+        </div>
+    </div>
 </body>
