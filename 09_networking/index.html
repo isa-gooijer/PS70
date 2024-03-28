@@ -98,12 +98,15 @@
                 the tutorial, following the steps and using the code provided by the authors worked. However, it was a bit 
                 harder to adjust Nathan's code on the LED to make it work. I mainly used the set up from the NerdTutorial code. 
                 However, I also had to switch <b><i>Firebase.set</i></b> to <b><i>Firebase.RTDB.set</i></b>. Furthermore, I also figure out I 
-                had to add a '<b>&</b>& before the firebase data object in the <b><i>firebase.RTDB.set()</i></b> and <b><i>Firebase.RTDB.get()</i></b> 
+                had to add a '<b>&</b>' before the firebase data object in the <b><i>firebase.RTDB.set()</i></b> and <b><i>Firebase.RTDB.get()</i></b> 
                 functions. <br><br>
                 <b>Example:</b> Firebase.<b>RTDB</b>.set(<b>&</b>firebaseData, "/LED_STATUS", "OFF"); <br><br>
                 After those changes the code worked and I was able to control the LED by manually changing my variable in the 
                 Realtime Database Console.</p>
-                <p>INSERT VIDEO</p>
+                <p><video controls class="img-fluid" style="width:50%; height:50%;">
+                        <source src="./PS70_w9_LED_manual.MOV" type="video/mp4">
+                    </video></p>
+                <p><img src="./LED_firebase_circuit.jpg" class="img-thumbnail" alt="ESP32 circuit LED - Firebase"></p>
                 <p></p>
                 <p>Next, I used Nathan's code for ON and OFF buttons on webpages and included my own url and APi key. See the 
                     buttons below.<br>
@@ -152,7 +155,9 @@
                     }    
                 </script>
                 </p>
-                <p>INSERT VIDEO OF IT WORKING</p>
+                <p><video controls class="img-fluid" style="width:50%; height:50%;">
+                    <source src="./PS70_w9_LED_websitebuttons.MOV" type="video/mp4">
+                    </video></p>
                 <p></p>
                 <p>
                     <h4>ARDUINO CODE:</h4>
