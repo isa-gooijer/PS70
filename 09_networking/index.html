@@ -97,9 +97,10 @@
                 on using a ESP32 to write and read information to and from a realtime database on Firebase. Reading through 
                 the tutorial, following the steps and using the code provided by the authors worked. However, it was a bit 
                 harder to adjust Nathan's code on the LED to make it work. I mainly used the set up from the NerdTutorial code. 
-                However, I also had to switch <i>Firebase.set</i> to <i>Firebase.RTDB.set</i>. Furthermore, I also figure out I 
-                had to add a '&' before the firebase data object in the firebase.RTDB.set() and Firebase.RTDB.get() functions. <br>
-                <b>Example:</b> Firebase.RTDB.set(&firebaseData, "/LED_STATUS", "OFF"); <br>
+                However, I also had to switch <b><i>Firebase.set</i></b> to <b><i>Firebase.RTDB.set</i></b>. Furthermore, I also figure out I 
+                had to add a '<b>&</b>& before the firebase data object in the <b><i>firebase.RTDB.set()</i></b> and <b><i>Firebase.RTDB.get()</i></b> 
+                functions. <br><br>
+                <b>Example:</b> Firebase.<b>RTDB</b>.set(<b>&</b>firebaseData, "/LED_STATUS", "OFF"); <br><br>
                 After those changes the code worked and I was able to control the LED by manually changing my variable in the 
                 Realtime Database Console.</p>
                 <p>INSERT VIDEO</p>
@@ -152,6 +153,121 @@
                 </script>
                 </p>
                 <p>INSERT VIDEO OF IT WORKING</p>
+                <p></p>
+                <p>
+                    <h4>ARDUINO CODE:</h4>
+                    <script src="https://strapdownjs.com/v/0.2/strapdown.js"> </script>
+                    <xmp>
+                        /*
+                        Rui Santos
+                        Complete project details at our blog.
+                          - ESP32: https://RandomNerdTutorials.com/esp32-firebase-realtime-database/
+                          - ESP8266: https://RandomNerdTutorials.com/esp8266-nodemcu-firebase-realtime-database/
+                        Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files.
+                        The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+                        Based in the RTDB Basic Example by Firebase-ESP-Client library by mobizt
+                        https://github.com/mobizt/Firebase-ESP-Client/blob/main/examples/RTDB/Basic/Basic.ino
+                      */
+                      
+                      #include <Arduino.h>
+                      #if defined(ESP32)
+                        #include <WiFi.h>
+                      #elif defined(ESP8266)
+                        #include <ESP8266WiFi.h>
+                      #endif
+                      #include <Firebase_ESP_Client.h>
+                      
+                      //Provide the token generation process info.
+                      #include "addons/TokenHelper.h"
+                      //Provide the RTDB payload printing info and other helper functions.
+                      #include "addons/RTDBHelper.h"
+                      
+                      // Insert your network credentials
+                      #define WIFI_SSID "MAKERSPACE"
+                      #define WIFI_PASSWORD "12345678"
+                      
+                      // Insert Firebase project API Key
+                      #define API_KEY "AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g"
+                      
+                      // Insert RTDB URLefine the RTDB URL */
+                      #define DATABASE_URL "https://ps70week9-default-rtdb.firebaseio.com" 
+                      
+                      String fireString = "";                                          // led status received from firebase
+                      int ledpin = 5;
+                      
+                      //Define Firebase Data object
+                      FirebaseData firebaseData;
+                      
+                      FirebaseAuth auth;
+                      FirebaseConfig config;
+                      
+                      unsigned long sendDataPrevMillis = 0;
+                      int intValue;
+                      float floatValue;
+                      bool signupOK = false;
+                      
+                      void setup() {
+                        Serial.begin(115200);
+                        pinMode(ledpin, OUTPUT);
+                        WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+                        Serial.print("Connecting to Wi-Fi");
+                        while (WiFi.status() != WL_CONNECTED) {
+                          Serial.print(".");
+                          delay(300);
+                        }
+                        Serial.println();
+                        Serial.print("Connected with IP: ");
+                        Serial.println(WiFi.localIP());
+                        Serial.println();
+                      
+                        /* Assign the api key (required) */
+                        config.api_key = API_KEY;
+                      
+                        /* Assign the RTDB URL (required) */
+                        config.database_url = DATABASE_URL;
+                      
+                        /* Sign up */
+                        if (Firebase.signUp(&config, &auth, "", "")) {
+                          Serial.println("ok");
+                          signupOK = true;
+                        }
+                        else {
+                          Serial.printf("%s\n", config.signer.signupError.message.c_str());
+                        }
+                      
+                        /* Assign the callback function for the long running token generation task */
+                        config.token_status_callback = tokenStatusCallback; //see addons/TokenHelper.h
+                      
+                        Firebase.begin(&config, &auth);
+                        Firebase.reconnectWiFi(true);
+                      
+                        Firebase.RTDB.set(&firebaseData, "/LED_STATUS", "OFF");              // set initial string of "OFF"
+                      }
+                      
+                      void loop() {
+                        Firebase.RTDB.get(&firebaseData, "/LED_STATUS");                     // get led status input from firebase
+                        fireString = firebaseData.stringData();                        // change to e.g. intData() or boolData()
+                        Serial.println(fireString);
+                      
+                        if (fireString == "ON") {                    // compare the input of led status received from firebase
+                          Serial.println("Led Turned ON");
+                          digitalWrite(ledpin, HIGH);                // make output led ON
+                        }
+                      
+                        else if (fireString == "OFF") {              // compare the input of led status received from firebase
+                          Serial.println("Led Turned OFF");
+                          digitalWrite(ledpin, LOW);                 // make output led OFF
+                        }
+                      
+                        else {
+                          Serial.println("Please send ON/OFF");
+                        }
+                      
+                        delay(1000); 
+                      }
+                    </xmp>
+                </p>
+                
             </div>
         </div>
     </div>
