@@ -78,10 +78,14 @@ var firebaseConfig = {
 	var ref = firebase.database().ref("/");
 
 	function saveMessage(temp) {
-            let newMessageRef = ref.push();
-            newMessageRef.set({
-                test: temp,
-            });
+		let newMessageRef = ref.push();
+		newMessageRef.set({
+			test: temp,
+		});
+	}
+	window.onload = saveMessage;
+
+
 /*JUNK
 	// Trying something
 	function checkTEMP(){
