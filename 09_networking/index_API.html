@@ -80,12 +80,11 @@ var firebaseConfig = {
 
 
 	writeUserData() {
-		var testing = "ON";
-		var myRef = firebase.database().ref().push();
+		var myRef = firebase.database().ref("/").push();
 		var key = myRef.key();
 
 		var newData={
-			test: testing
+			test: 2
 		}
 
 		myRef.push(newData);
