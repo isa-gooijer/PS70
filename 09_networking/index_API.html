@@ -37,8 +37,10 @@
 
 
 						// trying something
-						temp = currentHourlyForecast.temperature
-						document.getElementById("test").innerHTML = temp;
+						temperature = currentHourlyForecast.temperature;
+						description = currentHourlyForecast.shortForecast;
+						document.getElementById("temp").innerHTML = temperature;
+						document.getElementById("short").innerHTML = description;
 
 
                         // Create HTML to display the current hourly forecast
@@ -65,6 +67,14 @@
     window.onload = fetchCurrentHourlyForecast;
 </script>
 
-<h4>Testing if this works: <span id="test"></span></h4>
+<h4>TESTING:</h4>
+<div class="col-md-6">
+	<div class="card">
+		<div class="card-body">
+			<p class="card-text">Temperature: <span id="test"></span> °F</p>
+			<p class="card-text">Short description: <span id="short"></span></p>
+		</div>
+	</div>
+</div>
 </body>
 </html>
