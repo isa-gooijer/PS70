@@ -35,17 +35,23 @@
                         // Extract the current hourly forecast period from the JSON response
                         const currentHourlyForecast = data.properties.periods[0];
 
+
+						// trying something
+						temp = currentHourlyForecast.temperature
+						document.getElementById("test").innerHTML = temp;
+
+
                         // Create HTML to display the current hourly forecast
                         const forecastHtml = `
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <p class="card-text">${currentHourlyForecast.temperature} °F</p>
-                                <p class="card-text">${currentHourlyForecast.shortForecast}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
+							<div class="col-md-6">
+								<div class="card">
+									<div class="card-body">
+										<p class="card-text">${currentHourlyForecast.temperature} °F</p>
+										<p class="card-text">${currentHourlyForecast.shortForecast}</p>
+									</div>
+								</div>
+							</div>
+						`;
 
                         // Update the HTML content of the current hourly forecast container
                         document.getElementById('currentHourlyForecast').innerHTML = forecastHtml;
@@ -58,5 +64,7 @@
     // Call the fetchCurrentHourlyForecast function when the page loads
     window.onload = fetchCurrentHourlyForecast;
 </script>
+
+<h4>Testing if this works: <span id="test"></span></h4>
 </body>
 </html>
