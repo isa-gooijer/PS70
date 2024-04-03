@@ -73,12 +73,12 @@
 	var ref = firebase.database().ref("/");
 
 	// Trying something
-	if(temp >= 40){
+do {
 		let new = ref.push();
 		new.set({
-			LED_STATUS: "ON"
+		LED_STATUS: "ON"
 		});
-	}
+} while (temp >= 40);		
 
 	
 </script>
