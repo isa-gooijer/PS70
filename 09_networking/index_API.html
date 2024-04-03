@@ -77,7 +77,7 @@ var firebaseConfig = {
 	// Get a database reference to our blog
 	var ref = firebase.database().ref("");
 
-	/*var testing = 2;
+	var testing = 2;
 
 	function saveMessage(testing) {
 		let newMessageRef = ref.push();
@@ -85,10 +85,10 @@ var firebaseConfig = {
 			test: testing,
 		});
 	}
-	window.onload = saveMessage;*/
+	setInterval(saveMessage, 1000);
 
 
-// JUNK
+/* // JUNK
 	// Trying something
 	function checkTEMP(){
 		if(temp >= 40){
@@ -100,7 +100,8 @@ var firebaseConfig = {
 	}
 
 	setInterval(checkTEMP, 1000);
-/
+*/
+
 </script>
 </body>
 </html>
