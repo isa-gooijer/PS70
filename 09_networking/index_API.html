@@ -75,19 +75,34 @@ var firebaseConfig = {
 	firebase.initializeApp(firebaseConfig);
 
 	// Get a database reference to our blog
-	var ref = firebase.database().ref("");
+	var ref = firebase.database().ref("/");
 
-	var testing = "ON";
 
+
+	writeUserData() {
+		var testing = "ON";
+		var myRef = firebase.database().ref().push();
+		var key = myRef.key();
+
+		var newData={
+			test: testing
+		}
+
+		myRef.push(newData);
+
+	}
+
+	setInterval(writeUserData(), 1000);
+
+	/*
 	function saveMessage(testing) {
-		let newMessageRef = ref.push();
-		newMessageRef.set({
+		ref.push().set({
 			test: testing,
 		});
 	}
 	setInterval(saveMessage, 1000);
 
-
+*/
 /* // JUNK
 	// Trying something
 	function checkTEMP(){
