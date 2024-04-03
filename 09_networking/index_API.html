@@ -1,33 +1,62 @@
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>PHYSCI 70: Introduction to Digital Fabrication</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Current Hourly Forecast</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Current Forecast in Boston</h1>
+    <div id="currentHourlyForecast" class="row"></div>
+</div>
 
-	<!-- The core Firebase JS SDK is always required and must be listed first -->
-	<script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-	<!-- TODO: Add SDKs for Firebase products that you want to use
-	     https://firebase.google.com/docs/web/setup#available-libraries -->
-	<script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-analytics.js"></script>
+<script>
+    function fetchCurrentHourlyForecast() {
+        const apiUrl = 'https://api.weather.gov/points/42.3601,-71.0589';
 
-	<!-- Adding realtime-database Library -->
-	<script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script>
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Extract the forecast URL from the JSON response
+                const forecastUrl = data.properties.forecastHourly;
 
-	<!-- Adding Axios for API requests -->
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+                // Fetch the hourly forecast data from the forecast URL
+                fetch(forecastUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Extract the current hourly forecast period from the JSON response
+                        const currentHourlyForecast = data.properties.periods[0];
 
-	<!-- Adding p5 -->
-	<script src="../assets/p5.js"></script>
+                        // Create HTML to display the current hourly forecast
+                        const forecastHtml = `
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">${currentHourlyForecast.temperature} °F</p>
+                                <p class="card-text">${currentHourlyForecast.shortForecast}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
 
-	<!-- adding my dataLine class -->
-	<script src="./dataLine.js"></script>
+                        // Update the HTML content of the current hourly forecast container
+                        document.getElementById('currentHourlyForecast').innerHTML = forecastHtml;
+                    })
+                    .catch(error => console.error('Error fetching hourly forecast:', error));
+            })
+            .catch(error => console.error('Error fetching forecast URL:', error));
+    }
 
-	<!-- Adding my own Javascript -->
-	<script src="./script.js"></script>
-
+    // Call the fetchCurrentHourlyForecast function when the page loads
+    window.onload = fetchCurrentHourlyForecast;
+</script>
 </body>
+</html>
