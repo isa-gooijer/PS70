@@ -77,10 +77,12 @@ var firebaseConfig = {
 	// Get a database reference to our blog
 	var ref = firebase.database().ref("/");
 
-	function saveMessage(temp) {
+	var testing = 2;
+
+	function saveMessage(testing) {
 		let newMessageRef = ref.push();
 		newMessageRef.set({
-			test: temp,
+			test: testing,
 		});
 	}
 	window.onload = saveMessage;
