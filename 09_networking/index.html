@@ -152,7 +152,16 @@
                         ref.update({
                             "LED_STATUS": "OFF"
                         });
-                    }    
+                    }
+                    function getWeather() {
+                    axios.get('https://api.weather.gov/stations/KBOS/observations/latest')
+                        .then((response) => {
+                            document.getElementByID("time").innerHTML = "Time: " +  response.data.properties.timestamp;
+                            document.getElementByID("temp").innerHTML = "Outside Temperature (Celsius): " +  response.data.properties.temperature.value;
+                            document.getElementByID("wind").innerHTML = "Wind Direction (degree): " +  response.data.properties.windDirection.value + ", Wind Speed (km/h): " +  response.data.properties.windSpeed.value;;
+                            document.getElementByID("humid").innerHTML = "Humidity (percent): " +  response.data.properties.relativeHumidity.value;
+                    });
+                }    
                 </script>
                 </p>
                 <p><video controls class="img-fluid" style="width:50%; height:50%;">
@@ -272,18 +281,6 @@
                 }
                     </xmp>
                 </p>
-                <h4>API TEST:</h4>
-                <script>
-                function getWeather() {
-                    axios.get('https://api.weather.gov/stations/KBOS/observations/latest')
-                        .then((response) => {
-                            document.getElementByID("time").innerHTML = "Time: " +  response.data.properties.timestamp;
-                            document.getElementByID("temp").innerHTML = "Outside Temperature (Celsius): " +  response.data.properties.temperature.value;
-                            document.getElementByID("wind").innerHTML = "Wind Direction (degree): " +  response.data.properties.windDirection.value + ", Wind Speed (km/h): " +  response.data.properties.windSpeed.value;;
-                            document.getElementByID("humid").innerHTML = "Humidity (percent): " +  response.data.properties.relativeHumidity.value;
-                    });
-                }
-                </script>
             </div>
         </div>
     </div>
