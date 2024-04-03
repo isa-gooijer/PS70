@@ -37,23 +37,10 @@
 
 
 						// trying something
-						temp = currentHourlyForecast.temperature
+						//temp = 
 						description = currentHourlyForecast.shortForecast
-						document.getElementById("test").innerHTML = temp;
+						document.getElementById("test").innerHTML = currentHourlyForecast.temperature;
 						document.getElementById("short").innerHTML = description;
-
-
-                        // Create HTML to display the current hourly forecast
-                        /*const forecastHtml = `
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-body">
-										<p class="card-text">${currentHourlyForecast.temperature} °F</p>
-										<p class="card-text">${currentHourlyForecast.shortForecast}</p>
-									</div>
-								</div>
-							</div>
-						`;*/
 
                         // Update the HTML content of the current hourly forecast container
                         document.getElementById('currentHourlyForecast').innerHTML = forecastHtml;
