@@ -82,36 +82,6 @@ var firebaseConfig = {
 	// Get a database reference to our blog
 	var ref = firebase.database().ref("/");
 
-	function writeUserData() {
-		var myRef = ref;
-		myRef.set({
-			name: "Kemper", // quotation marks added
-			})
-	}
-
-	/*
-	function saveMessage(testing) {
-		ref.push().set({
-			test: testing,
-		});
-	}
-	setInterval(saveMessage, 1000);
-
-*/
-/* // JUNK
-	// Trying something
-	function checkTEMP(){
-		if(temp >= 40){
-			let new = ref.push();
-			new.set({
-				[LED_STATUS]: "ON"
-			});
-		}
-	}
-
-	setInterval(checkTEMP, 1000);
-*/
-
 </script>
 </body>
 </html>
