@@ -74,7 +74,8 @@
 
 	// Trying something
 	if(temp >= 40){
-		firebase.database().ref("").push().set({
+		let new = ref.push()
+		new.set({
 			LED_STATUS: "ON"
 		});
 	}
