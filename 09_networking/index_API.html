@@ -54,9 +54,14 @@
 
     // Call the fetchCurrentHourlyForecast function when the page loads
     window.onload = fetchCurrentHourlyForecast;
+	
+</script>
 
+<h4>TESTING: <span id="test"></span> °F</h4>
+<p>description: <span id="short"></span></p>
+<script>
 
-	var firebaseConfig = {
+var firebaseConfig = {
 			apiKey: "AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g",
 			authDomain: "REPLACE_WITH_YOUR_OWN",
 			databaseURL: "https://ps70week9-default-rtdb.firebaseio.com",
@@ -73,7 +78,7 @@
 	var ref = firebase.database().ref("/");
 
 	// Trying something
-	/*function checkTEMP(){
+	function checkTEMP(){
 		if(temp >= 40){
 			let new = ref.push();
 			new.set({
@@ -82,13 +87,7 @@
 		}
 	}
 
-	setInterval(checkTEMP, 1000);*/
-
-	
+	setInterval(checkTEMP, 1000);
 </script>
-
-<h4>TESTING: <span id="test"></span> °F</h4>
-<p>description: <span id="short"></span></p>
-
 </body>
 </html>
