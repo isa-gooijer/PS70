@@ -37,10 +37,16 @@
 
 
 						// trying something
-						//temp = 
+						temp = currentHourlyForecast.temperature
 						description = currentHourlyForecast.shortForecast
-						document.getElementById("test").innerHTML = currentHourlyForecast.temperature;
+						document.getElementById("test").innerHTML = temp;
 						document.getElementById("short").innerHTML = description;
+
+						if(temp >= 40){
+							firebase.database().ref("User").set({
+								LED_STATUS: "ON"
+							});
+						}
 
                         // Update the HTML content of the current hourly forecast container
                         document.getElementById('currentHourlyForecast').innerHTML = forecastHtml;
@@ -54,7 +60,7 @@
     window.onload = fetchCurrentHourlyForecast;
 </script>
 
-<h4>TESTING: <span id="test"> °F</span></h4>
+<h4>TESTING: <span id="test"></span> °F</h4>
 <p>description: <span id="short"></span></p>
 </body>
 </html>
