@@ -80,15 +80,10 @@ var firebaseConfig = {
 
 
 	writeUserData() {
-		var myRef = firebase.database().ref("/").push();
-		var key = myRef.key();
-
-		var newData={
-			test: 2
-		}
-
-		myRef.push(newData);
-
+		var myRef = firebase.database().ref("/");
+		myRef.set({
+			name: "Kemper", // quotation marks added
+			})
 	}
 
 	setInterval(writeUserData(), 1000);
