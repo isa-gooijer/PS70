@@ -1,13 +1,12 @@
 // Your web app's Firebase configuration
 var firebaseConfig = {
-    apiKey: "AIzaSyDJfZDE9dTVltl0PWkOnxRG6gapHoDhW8k",
-    authDomain: "hot-air-balloon-interface.firebaseapp.com",
-    databaseURL: "https://hot-air-balloon-interface.firebaseio.com",
-    projectId: "hot-air-balloon-interface",
-    storageBucket: "hot-air-balloon-interface.appspot.com",
-    messagingSenderId: "270661976089",
-    appId: "1:270661976089:web:6189cae23d08252161aa88",
-    measurementId: "G-SLLF9YV2F4"
+	apiKey: "AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g",
+	authDomain: "REPLACE_WITH_YOUR_OWN",
+	databaseURL: "https://ps70week9-default-rtdb.firebaseio.com",
+	projectId: "REPLACE_WITH_YOUR_OWN",
+	storageBucket: "REPLACE_WITH_YOUR_OWN",
+	messagingSenderId: "REPLACE_WITH_YOUR_OWN",
+	appId: "REPLACE_WITH_YOUR_OWN"
 };
 
 // Initialize Firebase
