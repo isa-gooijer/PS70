@@ -59,6 +59,11 @@
 
 <h4>TESTING: <span id="test"></span> °F</h4>
 <p>description: <span id="short"></span></p>
+
+<br>
+<br>
+<input type = "submit" onclick="writeUserData()" action = "welcome.php" id="submit"></button>
+
 <script>
 
 var firebaseConfig = {
@@ -77,10 +82,8 @@ var firebaseConfig = {
 	// Get a database reference to our blog
 	var ref = firebase.database().ref("/");
 
-
-
 	writeUserData() {
-		var myRef = firebase.database().ref("/");
+		var myRef = ref;
 		myRef.set({
 			name: "Kemper", // quotation marks added
 			})
@@ -112,6 +115,5 @@ var firebaseConfig = {
 */
 
 </script>
-<input type = "submit" onclick="writeUserData()" action = "welcome.php" id="submit"></button>
 </body>
 </html>
