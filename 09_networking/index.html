@@ -593,6 +593,152 @@
                           delay(1000); 
                         }
                 </xmp>
+                <h4>HTML CODE:</h4>
+                <xmp><!--
+                    <div class="container mt-5">
+                        <h1 class="text-center mb-4">Trivia and Weather Control Panel</h1>
+                    
+                        <div class="row"> 
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h2 class="card-title">Trivia</h2>
+                                        <p class="card-text">Welcome to the Trivia section! Test your knowledge by answering the trivia questions below.</p>
+                                        <p class="card-text">After clicking "Get Trivia Question," the purple LED will turn on if you select the correct answer, and the yellow one if your answer is incorrect.</p>
+                                        <p class="card-text" id="triviaQuestion"><strong>Loading...</strong></p>
+                                        <div class="mt-3">
+                                            <button class="btn btn-warning mr-2" onclick="getTriviaQuestion()">Get Trivia Question</button>
+                                            <button class="btn btn-success" id="turn-on" name="turnon" onclick="submitAnswer('True')">True</button>
+                                            <button class="btn btn-danger" id="turn-off" name="turnoff" onclick="submitAnswer('False')">False</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h2 class="card-title">Weather Forecast</h2>
+                                        <p class="card-text">Stay informed about the current weather conditions in Boston!</p>
+                                        <p class="card-text">After loading, the white LED will indicate whether the outside temperature is above a certain threshold. This LED serves as a placeholder for a water pump, where if the weather is above 60°F, water will be pumped out.</p>
+                                        <div class="row">
+                                            <div class="col" id="currentHourlyForecast"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
+                    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script>
+                    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+                    <script>
+                        var firebaseConfig = {
+                            apiKey:"AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g",
+                            authDomain:"REPLACE_WITH_YOUR_OWN",
+                            databaseURL:"https://ps70week9-default-rtdb.firebaseio.com",
+                            projectId:"REPLACE_WITH_YOUR_OWN",
+                            storageBucket:"REPLACE_WITH_YOUR_OWN",
+                            messagingSenderId:"REPLACE_WITH_YOUR_OWN",
+                            appId:"REPLACE_WITH_YOUR_OWN"
+                        };
+                    
+                        // Initialize Firebase
+                        firebase.initializeApp(firebaseConfig);
+                    
+                        var triviaQuestion = '';
+                        var triviaCorrectAnswer = '';
+                        var ref = firebase.database().ref("/");
+                    
+                        // Fetch trivia question from Trivia API
+                        function getTriviaQuestion() {
+                            // Turn off both LEDs
+                            ref.update({
+                                "GREEN_LED_STATUS": "OFF",
+                                "RED_LED_STATUS": "OFF"
+                            });
+                    
+                            fetch('https://opentdb.com/api.php?amount=1&category=9&difficulty=medium&type=boolean')
+                                .then(response => response.json())
+                                .then(data => {
+                                    triviaQuestion = decodeEntities(data.results[0].question);
+                                    triviaCorrectAnswer = data.results[0].correct_answer;
+                                    document.getElementById("triviaQuestion").innerHTML = "<strong>Trivia Question: " + triviaQuestion + "</strong>";
+                                })
+                                .catch(error => console.error('Error fetching trivia question:', error));
+                        }
+                    
+                        // function to decode HTML
+                        function decodeEntities(encodedString) {
+                            var textArea = document.createElement('textarea');
+                            textArea.innerHTML = encodedString;
+                            return textArea.value;
+                        }
+                    
+                            function submitAnswer(answer) {
+                                if (answer === triviaCorrectAnswer) {
+                                    ref.update({
+                                        "GREEN_LED_STATUS": "ON",
+                                        "RED_LED_STATUS": "OFF"
+                                    });
+                                } else {
+                                    ref.update({
+                                        "RED_LED_STATUS": "ON",
+                                        "GREEN_LED_STATUS": "OFF"
+                                    });
+                                }
+                            }
+                    
+                            function fetchWeatherAndUpdateLED() {
+                            const apiUrl = 'https://api.weather.gov/points/42.3601,-71.0589';
+                    
+                            fetch(apiUrl)
+                            .then(response => response.json())
+                            .then(data => {
+                            const forecastUrl = data.properties.forecastHourly;
+                    
+                            // Fetch the hourly forecast data from the forecast URL
+                            fetch(forecastUrl)
+                            .then(response => response.json())
+                            .then(data => {
+                            const currentHourlyForecast = data.properties.periods[0];
+                    
+                            // Create HTML to display the current hourly forecast
+                            const forecastHtml = `
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <p class="card-text">Temperature: ${currentHourlyForecast.temperature} °F</p>
+                                                    <p class="card-text">Forecast: ${currentHourlyForecast.shortForecast}</p>
+                                                </div>
+                                            </div>
+                                    `;
+                    
+                            // Update the HTML content of the current hourly forecast container
+                            document.getElementById('currentHourlyForecast').innerHTML = forecastHtml;
+                    
+                            // Check if the temperature is above 60 Fahrenheit
+                            const temperatureFahrenheit = parseInt(currentHourlyForecast.temperature);
+                            if (temperatureFahrenheit > 30) {
+                                ref.update({
+                                "YELLOW_LED_STATUS": "ON",
+                                });
+                            }
+                            else {
+                                ref.update({
+                                "YELLOW_LED_STATUS": "OFF",
+                                });
+                            }
+                            })
+                                .catch(error => console.error('Error fetching hourly forecast:', error));
+                            })
+                                .catch(error => console.error('Error fetching forecast URL:', error));
+                            }
+                            window.onload = fetchWeatherAndUpdateLED;
+                    </script>-->
+                </xmp>
                 <p></p>
                 <h2>A Refreshing Glass of Water to Fight Dehydration!</h2>
                 <p>We also thought it'd be cool if we could have a peristaltic pump wired up to the website and the firebase database. 
