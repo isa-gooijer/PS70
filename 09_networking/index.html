@@ -311,7 +311,7 @@
                 <h2>A Refreshing Glass of Water to Fight Dehydration!</h2>
                 <p>We also thought it'd be cool to expand on this we replaced the LED with a more complex output device - a water pump. 
                     This has practical use in the outside world similar to automatic sprinklers where the water starts pumping 
-                    water once a certain temperature is recorded.</p>
+                    water into a glass once a certain temperature is recorded.</p>
                 <p></p>
             </div>
         </div>
@@ -510,12 +510,12 @@
                     //Provide the RTDB payload printing info and other helper functions.
                     #include "addons/RTDBHelper.h"
                     // Insert your network credentials
-                    #define WIFI_SSID "MAKERSPACE"
-                    #define WIFI_PASSWORD "12345678"
+                    #define WIFI_SSID "INSERT YOUR OWN"
+                    #define WIFI_PASSWORD "INSERT YOUR OWN"
                     // Insert Firebase project API Key
-                    #define API_KEY "AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g"
+                    #define API_KEY "INSERT YOUR OWN"
                     // Insert RTDB URLefine the RTDB URL */
-                    #define DATABASE_URL "https://ps70week9-default-rtdb.firebaseio.com" 
+                    #define DATABASE_URL "INSERT YOUR OWN" 
                     // Define LED pins
                     #define GREEN_LED_PIN D0
                     #define YELLOW_LED_PIN D3
@@ -608,6 +608,21 @@
                         else {
                         digitalWrite(YELLOW_LED_PIN, LOW); // Turn off red LED
                         }
+
+                        Firebase.RTDB.get(&firebaseData, "/BLUE_LED_STATUS");
+                        fireString4 = firebaseData.stringData();
+                        Serial.println("Blue LED status: " + fireString4);
+                      
+                        if (fireString4 == "ON") {
+                          digitalWrite(BLUE_LED_PIN, HIGH);
+                          digitalWrite(pumpPin, HIGH);
+                          delay(30000); // on for 30 sec
+                          digitalWrite(pumpPin, LOW);
+                         // Turn on green LED
+                        }
+                        else {
+                          digitalWrite(BLUE_LED_PIN, LOW);
+                        }
                         delay(1000); 
                     }
                 </xmp>
@@ -655,9 +670,9 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script>
             var firebaseConfig = {
-                apiKey:"AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g",
+                apiKey:"INSERT YOUR OWN",
                 authDomain:"REPLACE_WITH_YOUR_OWN",
-                databaseURL:"https://ps70week9-default-rtdb.firebaseio.com",
+                databaseURL:"INSERT YOUR OWN",
                 projectId:"REPLACE_WITH_YOUR_OWN",
                 storageBucket:"REPLACE_WITH_YOUR_OWN",
                 messagingSenderId:"REPLACE_WITH_YOUR_OWN",
@@ -747,6 +762,16 @@
                 else {
                     ref.update({
                     "YELLOW_LED_STATUS": "OFF",
+                    });
+                }
+                if (temperatureFahrenheit > 35) {
+                ref.update({
+                "BLUE_LED_STATUS": "ON",
+                });
+                }
+                else {
+                    ref.update({
+                    "BLUE_LED_STATUS": "OFF",
                     });
                 }
                 })
