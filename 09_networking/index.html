@@ -275,7 +275,70 @@
                 
                 delay(1000); 
                 }
-                    </xmp>
+                </xmp>
+                </p>
+                <p></p>
+                <p></p>
+                <h2>Trivia!</h2>
+                <p>Text</p>
+                <p>text</p>
+                <p></p>
+                <h2>LEDs That Tell You What the Weather is Outside!</h2>
+                <p>We retrieved information about the Boston weather using an APi. We wanted to change the firebase 
+                    based on a temperature threshold, such that LEDs would switch on or off depending on whether they are 
+                    above or below this threshold or not. Beside this just being fun, it could be useful when you have a series 
+                    of LEDs above or next to your door and you can immediately see what kind of temperature you should dress for. 
+                    So, with these LEDS you'll never get screwed over because you forgot to look at the whether app, because they'll 
+                    be right in front of you. 
+                </p>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+                <script>
+                    function fetchCurrentHourlyForecast() {
+                        const apiUrl = 'https://api.weather.gov/points/42.3601,-71.0589';
+
+                        fetch(apiUrl)
+                            .then(response => response.json())
+                            .then(data => {
+                                // Extract the forecast URL from the JSON response
+                                const forecastUrl = data.properties.forecastHourly;
+
+                                // Fetch the hourly forecast data from the forecast URL
+                                fetch(forecastUrl)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        // Extract the current hourly forecast period from the JSON response
+                                        const currentHourlyForecast = data.properties.periods[0];
+
+                                        // Create HTML to display the current hourly forecast
+                                        const forecastHtml = `
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <p class="card-text">${currentHourlyForecast.temperature} °F</p>
+                                                <p class="card-text">${currentHourlyForecast.shortForecast}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+
+                                        // Update the HTML content of the current hourly forecast container
+                                        document.getElementById('currentHourlyForecast').innerHTML = forecastHtml;
+                                    })
+                                    .catch(error => console.error('Error fetching hourly forecast:', error));
+                            })
+                            .catch(error => console.error('Error fetching forecast URL:', error));
+                    }
+
+                    // Call the fetchCurrentHourlyForecast function when the page loads
+                    window.onload = fetchCurrentHourlyForecast;
+                </script>
+                <p></p>
+                <h2>A Refreshing Glass of Water to Fight Dehydration!</h2>
+                <p>We also thought it'd be cool if we could have a peristaltic pump wired up to the website and the firebase database. 
+                    This way if it gets hot, the pump will start pumping and fill up a glass of water for you. You'll never be dehydrated 
+                    again!!
                 </p>
             </div>
         </div>
