@@ -295,53 +295,59 @@
                     So, with these LEDS you'll never get screwed over because you forgot to look at the whether app, because they'll 
                     be right in front of you. 
                 </p>
-                <div class="container mt-5"></div>
-                    <h1 class="text-center mb-4">Current Forecast in Boston</h1>
-                    <div id="currentHourlyForecast" class="row"></div>
-                </div>
-                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5"></div>
+        <h1 class="text-center mb-4">Current Forecast in Boston</h1>
+        <div id="currentHourlyForecast" class="row"></div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-                <script>
-                    function fetchCurrentHourlyForecast() {
-                        const apiUrl = 'https://api.weather.gov/points/42.3601,-71.0589';
+    <script>
+        function fetchCurrentHourlyForecast() {
+            const apiUrl = 'https://api.weather.gov/points/42.3601,-71.0589';
 
-                        fetch(apiUrl)
-                            .then(response => response.json())
-                            .then(data => {
-                                // Extract the forecast URL from the JSON response
-                                const forecastUrl = data.properties.forecastHourly;
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Extract the forecast URL from the JSON response
+                    const forecastUrl = data.properties.forecastHourly;
 
-                                // Fetch the hourly forecast data from the forecast URL
-                                fetch(forecastUrl)
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        // Extract the current hourly forecast period from the JSON response
-                                        const currentHourlyForecast = data.properties.periods[0];
+                    // Fetch the hourly forecast data from the forecast URL
+                    fetch(forecastUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Extract the current hourly forecast period from the JSON response
+                            const currentHourlyForecast = data.properties.periods[0];
 
-                                        // Create HTML to display the current hourly forecast
-                                        const forecastHtml = `
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <p class="card-text">${currentHourlyForecast.temperature} °F</p>
-                                                <p class="card-text">${currentHourlyForecast.shortForecast}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `;
+                            // Create HTML to display the current hourly forecast
+                            const forecastHtml = `
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text">${currentHourlyForecast.temperature} °F</p>
+                                    <p class="card-text">${currentHourlyForecast.shortForecast}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
 
-                                        // Update the HTML content of the current hourly forecast container
-                                        document.getElementById('currentHourlyForecast').innerHTML = forecastHtml;
-                                    })
-                                    .catch(error => console.error('Error fetching hourly forecast:', error));
-                            })
-                            .catch(error => console.error('Error fetching forecast URL:', error));
-                    }
+                            // Update the HTML content of the current hourly forecast container
+                            document.getElementById('currentHourlyForecast').innerHTML = forecastHtml;
+                        })
+                        .catch(error => console.error('Error fetching hourly forecast:', error));
+                })
+                .catch(error => console.error('Error fetching forecast URL:', error));
+        }
 
-                    // Call the fetchCurrentHourlyForecast function when the page loads
-                    window.onload = fetchCurrentHourlyForecast;
-                </script>
+        // Call the fetchCurrentHourlyForecast function when the page loads
+        window.onload = fetchCurrentHourlyForecast;
+    </script>
+    div class="container-fluid text-start">
+    <div class="row justify-content-center">
+        <div class="col-8">
                 <h4>ARDUINO CODE:</h4>
                 <xmp>
                     insert arduino code
