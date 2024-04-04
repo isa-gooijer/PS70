@@ -498,133 +498,146 @@
             <div class="col-8">
                 <h4>ARDUINO CODE:</h4>
                 <xmp>
-                    #include <Arduino.h>
-                    #if defined(ESP32)
-                    #include <WiFi.h>
-                    #elif defined(ESP8266)
-                    #include <ESP8266WiFi.h>
-                    #endif
-                    #include <Firebase_ESP_Client.h>
-                    //Provide the token generation process info.
-                    #include "addons/TokenHelper.h"
-                    //Provide the RTDB payload printing info and other helper functions.
-                    #include "addons/RTDBHelper.h"
-                    // Insert your network credentials
-                    #define WIFI_SSID "INSERT YOUR OWN"
-                    #define WIFI_PASSWORD "INSERT YOUR OWN"
-                    // Insert Firebase project API Key
-                    #define API_KEY "INSERT YOUR OWN"
-                    // Insert RTDB URLefine the RTDB URL */
-                    #define DATABASE_URL "INSERT YOUR OWN" 
-                    // Define LED pins
-                    #define GREEN_LED_PIN D0
-                    #define YELLOW_LED_PIN D3
-                    #define RED_LED_PIN D6
-                    
-                    
-                    String fireString1 = "";
-                    String fireString2 = "";
-                    String fireString3 = "";
-                    //Define Firebase Data object
-                    FirebaseData firebaseData;
-                    FirebaseAuth auth;
-                    FirebaseConfig config;
-                    unsigned long sendDataPrevMillis = 0;
-                    int intValue;
-                    float floatValue;
-                    bool signupOK = false;
-                    
-                    
-                    void setup() {
-                        Serial.begin(115200);
-                        pinMode(GREEN_LED_PIN, OUTPUT);
-                        pinMode(RED_LED_PIN, OUTPUT);
-                        pinMode(YELLOW_LED_PIN, OUTPUT);
-                    
-                        WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-                        Serial.print("Connecting to Wi-Fi");
-                        while (WiFi.status() != WL_CONNECTED) {
-                        Serial.print(".");
-                        delay(300);
-                        }
-                        Serial.println();
-                        Serial.print("Connected with IP: ");
-                        Serial.println(WiFi.localIP());
-                        Serial.println();
-                        /* Assign the api key (required) */
-                        config.api_key = API_KEY;
-                        /* Assign the RTDB URL (required) */
-                        config.database_url = DATABASE_URL;
-                        /* Sign up */
-                        if (Firebase.signUp(&config, &auth, "", "")) {
-                        Serial.println("ok");
-                        signupOK = true;
-                        }
-                        else {
-                        Serial.printf("%s\n", config.signer.signupError.message.c_str());
-                        }
-                    
-                        /* Assign the callback function for the long running token generation task */
-                        config.token_status_callback = tokenStatusCallback; //see addons/TokenHelper.h
-                        Firebase.begin(&config, &auth);
-                        Firebase.reconnectWiFi(true);
-                        // Set initial LED status to OFF
-                        Firebase.RTDB.set(&firebaseData, "/GREEN_LED_STATUS", "OFF");
-                        Firebase.RTDB.set(&firebaseData, "/RED_LED_STATUS", "OFF"); 
-                        Firebase.RTDB.set(&firebaseData, "/YELLOW_LED_STATUS", "OFF");
+                #include <Arduino.h>
+                #if defined(ESP32)
+                #include <WiFi.h>
+                #elif defined(ESP8266)
+                #include <ESP8266WiFi.h>
+                #endif
+                #include <Firebase_ESP_Client.h>
+                //Provide the token generation process info.
+                #include "addons/TokenHelper.h"
+                //Provide the RTDB payload printing info and other helper functions.
+                #include "addons/RTDBHelper.h"
+                // Insert your network credentials
+                #define WIFI_SSID "MAKERSPACE"
+                #define WIFI_PASSWORD "12345678"
+                // Insert Firebase project API Key
+                #define API_KEY "AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g"
+                // Insert RTDB URLefine the RTDB URL */
+                #define DATABASE_URL "https://ps70week9-default-rtdb.firebaseio.com" 
+                // Define LED pins
+                #define GREEN_LED_PIN D0
+                #define YELLOW_LED_PIN D3
+                #define RED_LED_PIN D6
+                #define BLUE_LED_PIN D10
+                #define pumpPin D7
+                #define buttonPin D8
+                
+                String fireString1 = "";
+                String fireString2 = "";
+                String fireString3 = "";
+                String fireString4 = "";
+                //Define Firebase Data object
+                FirebaseData firebaseData;
+                FirebaseAuth auth;
+                FirebaseConfig config;
+                unsigned long sendDataPrevMillis = 0;
+                int intValue;
+                float floatValue;
+                bool signupOK = false;
+                int val;
+                
+                
+                void setup() {
+                    Serial.begin(115200);
+                    pinMode(GREEN_LED_PIN, OUTPUT);
+                    pinMode(RED_LED_PIN, OUTPUT);
+                    pinMode(YELLOW_LED_PIN, OUTPUT);
+                    pinMode(BLUE_LED_PIN, OUTPUT);
+                    pinMode(pumpPin, OUTPUT);
+                    pinMode(buttonPin, INPUT_PULLUP);
+                
+                    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+                    Serial.print("Connecting to Wi-Fi");
+                    while (WiFi.status() != WL_CONNECTED) {
+                    Serial.print(".");
+                    delay(300);
                     }
-                    void loop() {
-                        // Get LED status input from firebase
-                        Firebase.RTDB.get(&firebaseData, "/GREEN_LED_STATUS");
-                        fireString1 = firebaseData.stringData();
-                        Serial.println("Green LED status: " + fireString1);
-                    
-                        if (fireString1 == "ON") {
-                        digitalWrite(GREEN_LED_PIN, HIGH); // Turn on green LED
-                        }
-                        else {
-                        digitalWrite(GREEN_LED_PIN, LOW); // Turn off green LED
-                        }
-                    
-                        // Get LED status input from firebase
-                        Firebase.RTDB.get(&firebaseData, "/RED_LED_STATUS");
-                        fireString2 = firebaseData.stringData();
-                        Serial.println("Red LED status: " + fireString2);
-                    
-                        if (fireString2 == "ON") {
-                        digitalWrite(RED_LED_PIN, HIGH); // Turn on red LED
-                        } else {
-                        digitalWrite(RED_LED_PIN, LOW); // Turn off red LED
-                        }
-                    
-                        // Get LED status input from firebase
-                        Firebase.RTDB.get(&firebaseData, "/YELLOW_LED_STATUS");
-                        fireString3 = firebaseData.stringData();
-                        Serial.println("Yellow LED status: " + fireString3);
-                    
-                        if (fireString3 == "ON") {
-                        digitalWrite(YELLOW_LED_PIN, HIGH); // Turn on red LED
-                        }
-                        else {
-                        digitalWrite(YELLOW_LED_PIN, LOW); // Turn off red LED
-                        }
-
-                        Firebase.RTDB.get(&firebaseData, "/BLUE_LED_STATUS");
-                        fireString4 = firebaseData.stringData();
-                        Serial.println("Blue LED status: " + fireString4);
-                      
-                        if (fireString4 == "ON") {
-                          digitalWrite(BLUE_LED_PIN, HIGH);
-                          digitalWrite(pumpPin, HIGH);
-                          delay(30000); // on for 30 sec
-                          digitalWrite(pumpPin, LOW);
-                         // Turn on green LED
-                        }
-                        else {
-                          digitalWrite(BLUE_LED_PIN, LOW);
-                        }
-                        delay(1000); 
+                    Serial.println();
+                    Serial.print("Connected with IP: ");
+                    Serial.println(WiFi.localIP());
+                    Serial.println();
+                    /* Assign the api key (required) */
+                    config.api_key = API_KEY;
+                    /* Assign the RTDB URL (required) */
+                    config.database_url = DATABASE_URL;
+                    /* Sign up */
+                    if (Firebase.signUp(&config, &auth, "", "")) {
+                    Serial.println("ok");
+                    signupOK = true;
                     }
+                    else {
+                    Serial.printf("%s\n", config.signer.signupError.message.c_str());
+                    }
+                
+                    /* Assign the callback function for the long running token generation task */
+                    config.token_status_callback = tokenStatusCallback; //see addons/TokenHelper.h
+                    Firebase.begin(&config, &auth);
+                    Firebase.reconnectWiFi(true);
+                    // Set initial LED status to OFF
+                    Firebase.RTDB.set(&firebaseData, "/GREEN_LED_STATUS", "OFF");
+                    Firebase.RTDB.set(&firebaseData, "/RED_LED_STATUS", "OFF"); 
+                    Firebase.RTDB.set(&firebaseData, "/YELLOW_LED_STATUS", "OFF");
+                    Firebase.RTDB.set(&firebaseData, "/BLUE_LED_STATUS", "OFF");
+                }
+                void loop() {
+                    // Get LED status input from firebase
+                    Firebase.RTDB.get(&firebaseData, "/GREEN_LED_STATUS");
+                    fireString1 = firebaseData.stringData();
+                    Serial.println("Green LED status: " + fireString1);
+                
+                    if (fireString1 == "ON") {
+                    digitalWrite(GREEN_LED_PIN, HIGH); // Turn on green LED
+                    }
+                    else {
+                    digitalWrite(GREEN_LED_PIN, LOW); // Turn off green LED
+                    }
+                
+                    // Get LED status input from firebase
+                    Firebase.RTDB.get(&firebaseData, "/RED_LED_STATUS");
+                    fireString2 = firebaseData.stringData();
+                    Serial.println("Red LED status: " + fireString2);
+                
+                    if (fireString2 == "ON") {
+                    digitalWrite(RED_LED_PIN, HIGH); // Turn on red LED
+                    } else {
+                    digitalWrite(RED_LED_PIN, LOW); // Turn off red LED
+                    }
+                
+                    // Get LED status input from firebase
+                    Firebase.RTDB.get(&firebaseData, "/YELLOW_LED_STATUS");
+                    fireString3 = firebaseData.stringData();
+                    Serial.println("Yellow LED status: " + fireString3);
+                
+                    if (fireString3 == "ON") {
+                    digitalWrite(YELLOW_LED_PIN, HIGH); // Turn on red LED
+                    }
+                    else {
+                    digitalWrite(YELLOW_LED_PIN, LOW); // Turn off red LED
+                    }
+                
+                    Firebase.RTDB.get(&firebaseData, "/BLUE_LED_STATUS");
+                    fireString4 = firebaseData.stringData();
+                    Serial.println("Blue LED status: " + fireString4);
+                
+                    if (fireString4 == "ON") {
+                    digitalWrite(BLUE_LED_PIN, HIGH);
+                    val = digitalRead(buttonPin);
+                    if(val == LOW){
+                        digitalWrite(pumpPin, HIGH);
+                        delay(8000); // on for 30 sec
+                    }
+                    else {
+                        digitalWrite(pumpPin, LOW);
+                    }
+                    // Turn on green LED
+                    }
+                    else {
+                    digitalWrite(BLUE_LED_PIN, LOW);
+                    }
+                    delay(1000); 
+                }
                 </xmp>
                 <h4>HTML CODE:</h4>
                 <xmp><!--
