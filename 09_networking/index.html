@@ -302,8 +302,8 @@
                 <h2>Weather Indicators</h2>
                 <p>For our weather section we used the <a href="https://www.weather.gov/documentation/services-web-api">National Weather
                     Services API</a> to collect realtime forecasts for Boston. We wanted to create  an alert for when the weather was
-                    above a certain temperature. We used the API to collect the temperature data and compare it to a threshold that we set at 60
-                    degrees Fahrenheit to begin with. </p>
+                    above a certain temperature. We used the API to collect the temperature data and compare it to a threshold that we set at 30
+                    degrees Fahrenheit to begin with. (because it was 37 F and we wanted to see the LED turn on) </p>
                 <p>We then attached a white LED to our circuit and ESP32 that would turn on when the weather surpassed our threshold. This would be
                     useful for attaching to doors of homes so users could prepare accordingly. However, to expand on this we replaced the LED with
                     a more complex output device - a water pump. This has practical use in the outside world similar to automatic sprinklers where
@@ -458,6 +458,20 @@
             }
             window.onload = fetchWeatherAndUpdateLED;
     </script>
+    <div class="container-fluid text-start">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h4>VIDEOS of the LEDs turning ON and OFF</h4>
+                <i> After reloading the page (temp > 30 F) and playing trivia:</i>
+                <p><video controls class="img-fluid" style="width:50%; height:50%;">
+                    <source src="./screen_LEDS.MOV" type="video/mp4">
+                </video></p>
+                <p><video controls class="img-fluid" style="width:50%; height:50%;">
+                    <source src="./screenrecording_website_firebase.mov" type="video/mp4">
+                </video></p>
+            </div>
+        </div>
+    </div>
 
     <p></p>
     <p></p>
