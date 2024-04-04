@@ -290,18 +290,33 @@
                 </p>
                 <p></p>
                 <p></p>
-                <h2>Trivia!</h2>
-                <p>Text</p>
-                <p>text</p>
+                <h2>Trivia Game Show Simulation</h2>
+                <p>We decided to implement a trivia section using the <a href="https://opentdb.com/api_config.php">Open Trivia API</a>.
+                The API allows for true or false trivia questions as well as short answer questions. We chose to use the true or false
+                    questions and have two different color LEDs indicate whether the user's choice was correct or incorrect.</p>
+                <p>After attaching the APi to the page. We first used web alerts as a placeholder for the LEDs to ensure the functionality
+                    was correct before adding the output devices. We then used similar logic as the LED firebase example from class to
+                    change the statuses of our LEDs to correspond to whether the question was answered correctly or not which is similar to
+                    how game shows work.</p>
+
+                <h2>Weather Indicators</h2>
+                <p>For our weather section we used the <a href="https://www.weather.gov/documentation/services-web-api">National Weather
+                    Services API</a> to collect realtime forecasts for Boston. We wanted to create  an alert for when the weather was
+                    above a certain temperature. We used the API to collect the temperature data and compare it to a threshold that we set at 60
+                    degrees Fahrenheit to begin with. </p>
+                <p>We then attached a white LED to our circuit and ESP32 that would turn on when the weather surpassed our threshold. This would be
+                    useful for attaching to doors of homes so users could prepare accordingly. However, to expand on this we replaced the LED with
+                    a more complex output device - a water pump. This has practical use in the outside world similar to automatic sprinklers where
+                    the water starts pumping water once a certain temperature is recorded.</p>
                 <p></p>
-                <h2>LEDs That Tell You What the Weather is Outside!</h2>
+                <!--<h2>LEDs That Tell You What the Weather is Outside!</h2>
                 <p>We retrieved information about the Boston weather using an APi. We wanted to change the firebase 
                     based on a temperature threshold, such that LEDs would switch on or off depending on whether they are 
                     above or below this threshold or not. Beside this just being fun, it could be useful when you have a series 
                     of LEDs above or next to your door and you can immediately see what kind of temperature you should dress for. 
                     So, with these LEDS you'll never get screwed over because you forgot to look at the whether app, because they'll 
                     be right in front of you. 
-                </p>
+                </p>-->
             </div>
         </div>
     </div>
@@ -416,9 +431,9 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         var firebaseConfig = {
-            apiKey:"AIzaSyC6tMhTXFIc8CKd2nq2UoehaM_y7kO0nfc",
+            apiKey:"AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g",
             authDomain:"REPLACE_WITH_YOUR_OWN",
-            databaseURL:"https://esp32-demo-6121a-default-rtdb.firebaseio.com/",
+            databaseURL:"https://ps70week9-default-rtdb.firebaseio.com",
             projectId:"REPLACE_WITH_YOUR_OWN",
             storageBucket:"REPLACE_WITH_YOUR_OWN",
             messagingSenderId:"REPLACE_WITH_YOUR_OWN",
