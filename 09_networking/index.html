@@ -293,7 +293,8 @@
                 <h2>Trivia Game Show Simulation</h2>
                 <p>We decided to implement a trivia section using the <a href="https://opentdb.com/api_config.php">Open Trivia API</a>.
                 The API allows for true or false trivia questions as well as short answer questions. We chose to use the true or false
-                    questions and have two different color LEDs indicate whether the user's choice was correct or incorrect.</p>
+                    questions and have two different color LEDs indicate whether the user's choice was correct or incorrect. GREEN is 
+                    correct, RED is incorrect.</p>
                 <p>After attaching the APi to the page. We first used web alerts as a placeholder for the LEDs to ensure the functionality
                     was correct before adding the output devices. We then used similar logic as the LED firebase example from class to
                     change the statuses of our LEDs to correspond to whether the question was answered correctly or not which is similar to
@@ -304,10 +305,13 @@
                     Services API</a> to collect realtime forecasts for Boston. We wanted to create  an alert for when the weather was
                     above a certain temperature. We used the API to collect the temperature data and compare it to a threshold that we set at 30
                     degrees Fahrenheit to begin with. (because it was 37 F and we wanted to see the LED turn on) </p>
-                <p>We then attached a white LED to our circuit and ESP32 that would turn on when the weather surpassed our threshold. This would be
-                    useful for attaching to doors of homes so users could prepare accordingly. However, to expand on this we replaced the LED with
-                    a more complex output device - a water pump. This has practical use in the outside world similar to automatic sprinklers where
-                    the water starts pumping water once a certain temperature is recorded.</p>
+                <p>We then attached a YELLOW LED to our circuit and ESP32 that would turn on when the weather surpassed our threshold. This would be
+                    useful for attaching to doors of homes so users could prepare accordingly. </p>
+                <p></p>
+                <h2>A Refreshing Glass of Water to Fight Dehydration!</h2>
+                <p>We also thought it'd be cool to expand on this we replaced the LED with a more complex output device - a water pump. 
+                    This has practical use in the outside world similar to automatic sprinklers where the water starts pumping 
+                    water once a certain temperature is recorded.</p>
                 <p></p>
             </div>
         </div>
@@ -740,11 +744,6 @@
                     </script>-->
                 </xmp>
                 <p></p>
-                <h2>A Refreshing Glass of Water to Fight Dehydration!</h2>
-                <p>We also thought it'd be cool if we could have a peristaltic pump wired up to the website and the firebase database. 
-                    This way if it gets hot, the pump will start pumping and fill up a glass of water for you. You'll never be dehydrated 
-                    again!!
-                </p>
             </div>
         </div>
     </div>
