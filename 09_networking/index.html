@@ -442,21 +442,20 @@
             // Check if the temperature is above 60 Fahrenheit
             const temperatureFahrenheit = parseInt(currentHourlyForecast.temperature);
             if (temperatureFahrenheit > 60) {
-            ref.update({
-            "GREEN_LED_STATUS": "ON",
-            "RED_LED_STATUS": "ON"
-        });
-        } else {
-            ref.update({
-            "GREEN_LED_STATUS": "ON",
-            "RED_LED_STATUS": "ON"
-        });
-        }
-        })
-            .catch(error => console.error('Error fetching hourly forecast:', error));
-        })
-            .catch(error => console.error('Error fetching forecast URL:', error));
-        }
+                ref.update({
+                "YELLOW_LED_STATUS": "ON",
+                });
+            }
+            else {
+                ref.update({
+                "YELLOW_LED_STATUS": "OFF",
+                });
+            }
+            })
+                .catch(error => console.error('Error fetching hourly forecast:', error));
+            })
+                .catch(error => console.error('Error fetching forecast URL:', error));
+            }
             window.onload = fetchWeatherAndUpdateLED;
     </script>
 
