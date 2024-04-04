@@ -327,7 +327,8 @@
                     <div class="card-body">
                         <h2 class="card-title">Trivia</h2>
                         <p class="card-text">Welcome to the Trivia section! Test your knowledge by answering the trivia questions below.</p>
-                        <p class="card-text">After clicking "Get Trivia Question," the purple LED will turn on if you select the correct answer, and the yellow one if your answer is incorrect.</p>
+                        <p class="card-text">After clicking "Get Trivia Question," the GREEN LED will turn on if you select the correct answer, 
+                            and the RED one if your answer is incorrect.</p>
                         <p class="card-text" id="triviaQuestion"><strong>Loading...</strong></p>
                         <div class="mt-3">
                             <button class="btn btn-warning mr-2" onclick="getTriviaQuestion()">Get Trivia Question</button>
@@ -344,7 +345,8 @@
                     <div class="card-body">
                         <h2 class="card-title">Weather Forecast</h2>
                         <p class="card-text">Stay informed about the current weather conditions in Boston!</p>
-                        <p class="card-text">After loading, the white LED will indicate whether the outside temperature is above a certain threshold. This LED serves as a placeholder for a water pump, where if the weather is above 60°F, water will be pumped out.</p>
+                        <p class="card-text">After loading, the YELLOW LED will indicate whether the outside temperature is above a certain threshold. 
+                            This LED serves as a placeholder for a water pump, where if the weather is above 60°F, water will be pumped out.</p>
                         <div class="row">
                             <div class="col" id="currentHourlyForecast"></div>
                         </div>
@@ -455,6 +457,18 @@
                 "YELLOW_LED_STATUS": "OFF",
                 });
             }
+
+            if (temperatureFahrenheit > 35) {
+                ref.update({
+                    "BLUE_LED_STATUS": "ON",
+                });
+            }
+            else {
+                ref.update({
+                "BLUE_LED_STATUS": "OFF",
+                });
+            }
+
             })
                 .catch(error => console.error('Error fetching hourly forecast:', error));
             })
@@ -485,263 +499,263 @@
                 <h4>ARDUINO CODE:</h4>
                 <xmp>
                     #include <Arduino.h>
-                        #if defined(ESP32)
-                        #include <WiFi.h>
-                        #elif defined(ESP8266)
-                        #include <ESP8266WiFi.h>
-                        #endif
-                        #include <Firebase_ESP_Client.h>
-                        //Provide the token generation process info.
-                        #include "addons/TokenHelper.h"
-                        //Provide the RTDB payload printing info and other helper functions.
-                        #include "addons/RTDBHelper.h"
-                        // Insert your network credentials
-                        #define WIFI_SSID "MAKERSPACE"
-                        #define WIFI_PASSWORD "12345678"
-                        // Insert Firebase project API Key
-                        #define API_KEY "AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g"
-                        // Insert RTDB URLefine the RTDB URL */
-                        #define DATABASE_URL "https://ps70week9-default-rtdb.firebaseio.com" 
-                        // Define LED pins
-                        #define GREEN_LED_PIN D0
-                        #define YELLOW_LED_PIN D3
-                        #define RED_LED_PIN D6
-                        
-                        
-                        String fireString1 = "";
-                        String fireString2 = "";
-                        String fireString3 = "";
-                        //Define Firebase Data object
-                        FirebaseData firebaseData;
-                        FirebaseAuth auth;
-                        FirebaseConfig config;
-                        unsigned long sendDataPrevMillis = 0;
-                        int intValue;
-                        float floatValue;
-                        bool signupOK = false;
-                        
-                        
-                        void setup() {
-                          Serial.begin(115200);
-                          pinMode(GREEN_LED_PIN, OUTPUT);
-                          pinMode(RED_LED_PIN, OUTPUT);
-                          pinMode(YELLOW_LED_PIN, OUTPUT);
-                        
-                          WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-                          Serial.print("Connecting to Wi-Fi");
-                          while (WiFi.status() != WL_CONNECTED) {
-                            Serial.print(".");
-                            delay(300);
-                          }
-                          Serial.println();
-                          Serial.print("Connected with IP: ");
-                          Serial.println(WiFi.localIP());
-                          Serial.println();
-                          /* Assign the api key (required) */
-                          config.api_key = API_KEY;
-                          /* Assign the RTDB URL (required) */
-                          config.database_url = DATABASE_URL;
-                          /* Sign up */
-                          if (Firebase.signUp(&config, &auth, "", "")) {
-                            Serial.println("ok");
-                            signupOK = true;
-                          }
-                          else {
-                            Serial.printf("%s\n", config.signer.signupError.message.c_str());
-                          }
-                        
-                          /* Assign the callback function for the long running token generation task */
-                          config.token_status_callback = tokenStatusCallback; //see addons/TokenHelper.h
-                          Firebase.begin(&config, &auth);
-                          Firebase.reconnectWiFi(true);
-                          // Set initial LED status to OFF
-                          Firebase.RTDB.set(&firebaseData, "/GREEN_LED_STATUS", "OFF");
-                          Firebase.RTDB.set(&firebaseData, "/RED_LED_STATUS", "OFF"); 
-                          Firebase.RTDB.set(&firebaseData, "/YELLOW_LED_STATUS", "OFF");
+                    #if defined(ESP32)
+                    #include <WiFi.h>
+                    #elif defined(ESP8266)
+                    #include <ESP8266WiFi.h>
+                    #endif
+                    #include <Firebase_ESP_Client.h>
+                    //Provide the token generation process info.
+                    #include "addons/TokenHelper.h"
+                    //Provide the RTDB payload printing info and other helper functions.
+                    #include "addons/RTDBHelper.h"
+                    // Insert your network credentials
+                    #define WIFI_SSID "MAKERSPACE"
+                    #define WIFI_PASSWORD "12345678"
+                    // Insert Firebase project API Key
+                    #define API_KEY "AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g"
+                    // Insert RTDB URLefine the RTDB URL */
+                    #define DATABASE_URL "https://ps70week9-default-rtdb.firebaseio.com" 
+                    // Define LED pins
+                    #define GREEN_LED_PIN D0
+                    #define YELLOW_LED_PIN D3
+                    #define RED_LED_PIN D6
+                    
+                    
+                    String fireString1 = "";
+                    String fireString2 = "";
+                    String fireString3 = "";
+                    //Define Firebase Data object
+                    FirebaseData firebaseData;
+                    FirebaseAuth auth;
+                    FirebaseConfig config;
+                    unsigned long sendDataPrevMillis = 0;
+                    int intValue;
+                    float floatValue;
+                    bool signupOK = false;
+                    
+                    
+                    void setup() {
+                        Serial.begin(115200);
+                        pinMode(GREEN_LED_PIN, OUTPUT);
+                        pinMode(RED_LED_PIN, OUTPUT);
+                        pinMode(YELLOW_LED_PIN, OUTPUT);
+                    
+                        WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+                        Serial.print("Connecting to Wi-Fi");
+                        while (WiFi.status() != WL_CONNECTED) {
+                        Serial.print(".");
+                        delay(300);
                         }
-                        void loop() {
-                          // Get LED status input from firebase
-                          Firebase.RTDB.get(&firebaseData, "/GREEN_LED_STATUS");
-                          fireString1 = firebaseData.stringData();
-                          Serial.println("Green LED status: " + fireString1);
-                        
-                          if (fireString1 == "ON") {
-                            digitalWrite(GREEN_LED_PIN, HIGH); // Turn on green LED
-                          }
-                          else {
-                            digitalWrite(GREEN_LED_PIN, LOW); // Turn off green LED
-                          }
-                        
-                          // Get LED status input from firebase
-                          Firebase.RTDB.get(&firebaseData, "/RED_LED_STATUS");
-                          fireString2 = firebaseData.stringData();
-                          Serial.println("Red LED status: " + fireString2);
-                        
-                          if (fireString2 == "ON") {
-                          digitalWrite(RED_LED_PIN, HIGH); // Turn on red LED
-                          } else {
-                          digitalWrite(RED_LED_PIN, LOW); // Turn off red LED
-                          }
-                        
-                          // Get LED status input from firebase
-                          Firebase.RTDB.get(&firebaseData, "/YELLOW_LED_STATUS");
-                          fireString3 = firebaseData.stringData();
-                          Serial.println("Yellow LED status: " + fireString3);
-                        
-                          if (fireString3 == "ON") {
-                            digitalWrite(YELLOW_LED_PIN, HIGH); // Turn on red LED
-                          }
-                          else {
-                            digitalWrite(YELLOW_LED_PIN, LOW); // Turn off red LED
-                          }
-                          delay(1000); 
+                        Serial.println();
+                        Serial.print("Connected with IP: ");
+                        Serial.println(WiFi.localIP());
+                        Serial.println();
+                        /* Assign the api key (required) */
+                        config.api_key = API_KEY;
+                        /* Assign the RTDB URL (required) */
+                        config.database_url = DATABASE_URL;
+                        /* Sign up */
+                        if (Firebase.signUp(&config, &auth, "", "")) {
+                        Serial.println("ok");
+                        signupOK = true;
                         }
+                        else {
+                        Serial.printf("%s\n", config.signer.signupError.message.c_str());
+                        }
+                    
+                        /* Assign the callback function for the long running token generation task */
+                        config.token_status_callback = tokenStatusCallback; //see addons/TokenHelper.h
+                        Firebase.begin(&config, &auth);
+                        Firebase.reconnectWiFi(true);
+                        // Set initial LED status to OFF
+                        Firebase.RTDB.set(&firebaseData, "/GREEN_LED_STATUS", "OFF");
+                        Firebase.RTDB.set(&firebaseData, "/RED_LED_STATUS", "OFF"); 
+                        Firebase.RTDB.set(&firebaseData, "/YELLOW_LED_STATUS", "OFF");
+                    }
+                    void loop() {
+                        // Get LED status input from firebase
+                        Firebase.RTDB.get(&firebaseData, "/GREEN_LED_STATUS");
+                        fireString1 = firebaseData.stringData();
+                        Serial.println("Green LED status: " + fireString1);
+                    
+                        if (fireString1 == "ON") {
+                        digitalWrite(GREEN_LED_PIN, HIGH); // Turn on green LED
+                        }
+                        else {
+                        digitalWrite(GREEN_LED_PIN, LOW); // Turn off green LED
+                        }
+                    
+                        // Get LED status input from firebase
+                        Firebase.RTDB.get(&firebaseData, "/RED_LED_STATUS");
+                        fireString2 = firebaseData.stringData();
+                        Serial.println("Red LED status: " + fireString2);
+                    
+                        if (fireString2 == "ON") {
+                        digitalWrite(RED_LED_PIN, HIGH); // Turn on red LED
+                        } else {
+                        digitalWrite(RED_LED_PIN, LOW); // Turn off red LED
+                        }
+                    
+                        // Get LED status input from firebase
+                        Firebase.RTDB.get(&firebaseData, "/YELLOW_LED_STATUS");
+                        fireString3 = firebaseData.stringData();
+                        Serial.println("Yellow LED status: " + fireString3);
+                    
+                        if (fireString3 == "ON") {
+                        digitalWrite(YELLOW_LED_PIN, HIGH); // Turn on red LED
+                        }
+                        else {
+                        digitalWrite(YELLOW_LED_PIN, LOW); // Turn off red LED
+                        }
+                        delay(1000); 
+                    }
                 </xmp>
                 <h4>HTML CODE:</h4>
                 <xmp><!--
-                    <div class="container mt-5">
-                        <h1 class="text-center mb-4">Trivia and Weather Control Panel</h1>
-                    
-                        <div class="row"> 
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h2 class="card-title">Trivia</h2>
-                                        <p class="card-text">Welcome to the Trivia section! Test your knowledge by answering the trivia questions below.</p>
-                                        <p class="card-text">After clicking "Get Trivia Question," the purple LED will turn on if you select the correct answer, and the yellow one if your answer is incorrect.</p>
-                                        <p class="card-text" id="triviaQuestion"><strong>Loading...</strong></p>
-                                        <div class="mt-3">
-                                            <button class="btn btn-warning mr-2" onclick="getTriviaQuestion()">Get Trivia Question</button>
-                                            <button class="btn btn-success" id="turn-on" name="turnon" onclick="submitAnswer('True')">True</button>
-                                            <button class="btn btn-danger" id="turn-off" name="turnoff" onclick="submitAnswer('False')">False</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h2 class="card-title">Weather Forecast</h2>
-                                        <p class="card-text">Stay informed about the current weather conditions in Boston!</p>
-                                        <p class="card-text">After loading, the white LED will indicate whether the outside temperature is above a certain threshold. This LED serves as a placeholder for a water pump, where if the weather is above 60°F, water will be pumped out.</p>
-                                        <div class="row">
-                                            <div class="col" id="currentHourlyForecast"></div>
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="container mt-5">
+            <h1 class="text-center mb-4">Trivia and Weather Control Panel</h1>
+        
+            <div class="row"> 
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Trivia</h2>
+                            <p class="card-text">Welcome to the Trivia section! Test your knowledge by answering the trivia questions below.</p>
+                            <p class="card-text">After clicking "Get Trivia Question," the purple LED will turn on if you select the correct answer, and the yellow one if your answer is incorrect.</p>
+                            <p class="card-text" id="triviaQuestion"><strong>Loading...</strong></p>
+                            <div class="mt-3">
+                                <button class="btn btn-warning mr-2" onclick="getTriviaQuestion()">Get Trivia Question</button>
+                                <button class="btn btn-success" id="turn-on" name="turnon" onclick="submitAnswer('True')">True</button>
+                                <button class="btn btn-danger" id="turn-off" name="turnoff" onclick="submitAnswer('False')">False</button>
                             </div>
                         </div>
                     </div>
-                    
-                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-                    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
-                    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script>
-                    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-                    <script>
-                        var firebaseConfig = {
-                            apiKey:"AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g",
-                            authDomain:"REPLACE_WITH_YOUR_OWN",
-                            databaseURL:"https://ps70week9-default-rtdb.firebaseio.com",
-                            projectId:"REPLACE_WITH_YOUR_OWN",
-                            storageBucket:"REPLACE_WITH_YOUR_OWN",
-                            messagingSenderId:"REPLACE_WITH_YOUR_OWN",
-                            appId:"REPLACE_WITH_YOUR_OWN"
-                        };
-                    
-                        // Initialize Firebase
-                        firebase.initializeApp(firebaseConfig);
-                    
-                        var triviaQuestion = '';
-                        var triviaCorrectAnswer = '';
-                        var ref = firebase.database().ref("/");
-                    
-                        // Fetch trivia question from Trivia API
-                        function getTriviaQuestion() {
-                            // Turn off both LEDs
-                            ref.update({
-                                "GREEN_LED_STATUS": "OFF",
-                                "RED_LED_STATUS": "OFF"
-                            });
-                    
-                            fetch('https://opentdb.com/api.php?amount=1&category=9&difficulty=medium&type=boolean')
-                                .then(response => response.json())
-                                .then(data => {
-                                    triviaQuestion = decodeEntities(data.results[0].question);
-                                    triviaCorrectAnswer = data.results[0].correct_answer;
-                                    document.getElementById("triviaQuestion").innerHTML = "<strong>Trivia Question: " + triviaQuestion + "</strong>";
-                                })
-                                .catch(error => console.error('Error fetching trivia question:', error));
-                        }
-                    
-                        // function to decode HTML
-                        function decodeEntities(encodedString) {
-                            var textArea = document.createElement('textarea');
-                            textArea.innerHTML = encodedString;
-                            return textArea.value;
-                        }
-                    
-                            function submitAnswer(answer) {
-                                if (answer === triviaCorrectAnswer) {
-                                    ref.update({
-                                        "GREEN_LED_STATUS": "ON",
-                                        "RED_LED_STATUS": "OFF"
-                                    });
-                                } else {
-                                    ref.update({
-                                        "RED_LED_STATUS": "ON",
-                                        "GREEN_LED_STATUS": "OFF"
-                                    });
-                                }
-                            }
-                    
-                            function fetchWeatherAndUpdateLED() {
-                            const apiUrl = 'https://api.weather.gov/points/42.3601,-71.0589';
-                    
-                            fetch(apiUrl)
-                            .then(response => response.json())
-                            .then(data => {
-                            const forecastUrl = data.properties.forecastHourly;
-                    
-                            // Fetch the hourly forecast data from the forecast URL
-                            fetch(forecastUrl)
-                            .then(response => response.json())
-                            .then(data => {
-                            const currentHourlyForecast = data.properties.periods[0];
-                    
-                            // Create HTML to display the current hourly forecast
-                            const forecastHtml = `
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <p class="card-text">Temperature: ${currentHourlyForecast.temperature} °F</p>
-                                                    <p class="card-text">Forecast: ${currentHourlyForecast.shortForecast}</p>
-                                                </div>
-                                            </div>
-                                    `;
-                    
-                            // Update the HTML content of the current hourly forecast container
-                            document.getElementById('currentHourlyForecast').innerHTML = forecastHtml;
-                    
-                            // Check if the temperature is above 60 Fahrenheit
-                            const temperatureFahrenheit = parseInt(currentHourlyForecast.temperature);
-                            if (temperatureFahrenheit > 30) {
-                                ref.update({
-                                "YELLOW_LED_STATUS": "ON",
-                                });
-                            }
-                            else {
-                                ref.update({
-                                "YELLOW_LED_STATUS": "OFF",
-                                });
-                            }
-                            })
-                                .catch(error => console.error('Error fetching hourly forecast:', error));
-                            })
-                                .catch(error => console.error('Error fetching forecast URL:', error));
-                            }
-                            window.onload = fetchWeatherAndUpdateLED;
-                    </script>-->
+                </div>
+        
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Weather Forecast</h2>
+                            <p class="card-text">Stay informed about the current weather conditions in Boston!</p>
+                            <p class="card-text">After loading, the white LED will indicate whether the outside temperature is above a certain threshold. This LED serves as a placeholder for a water pump, where if the weather is above 60°F, water will be pumped out.</p>
+                            <div class="row">
+                                <div class="col" id="currentHourlyForecast"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            var firebaseConfig = {
+                apiKey:"AIzaSyBnfXfi-VzYYfbdmD_0S91TUKo3a975G7g",
+                authDomain:"REPLACE_WITH_YOUR_OWN",
+                databaseURL:"https://ps70week9-default-rtdb.firebaseio.com",
+                projectId:"REPLACE_WITH_YOUR_OWN",
+                storageBucket:"REPLACE_WITH_YOUR_OWN",
+                messagingSenderId:"REPLACE_WITH_YOUR_OWN",
+                appId:"REPLACE_WITH_YOUR_OWN"
+            };
+        
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+        
+            var triviaQuestion = '';
+            var triviaCorrectAnswer = '';
+            var ref = firebase.database().ref("/");
+        
+            // Fetch trivia question from Trivia API
+            function getTriviaQuestion() {
+                // Turn off both LEDs
+                ref.update({
+                    "GREEN_LED_STATUS": "OFF",
+                    "RED_LED_STATUS": "OFF"
+                });
+        
+                fetch('https://opentdb.com/api.php?amount=1&category=9&difficulty=medium&type=boolean')
+                    .then(response => response.json())
+                    .then(data => {
+                        triviaQuestion = decodeEntities(data.results[0].question);
+                        triviaCorrectAnswer = data.results[0].correct_answer;
+                        document.getElementById("triviaQuestion").innerHTML = "<strong>Trivia Question: " + triviaQuestion + "</strong>";
+                    })
+                    .catch(error => console.error('Error fetching trivia question:', error));
+            }
+        
+            // function to decode HTML
+            function decodeEntities(encodedString) {
+                var textArea = document.createElement('textarea');
+                textArea.innerHTML = encodedString;
+                return textArea.value;
+            }
+        
+                function submitAnswer(answer) {
+                    if (answer === triviaCorrectAnswer) {
+                        ref.update({
+                            "GREEN_LED_STATUS": "ON",
+                            "RED_LED_STATUS": "OFF"
+                        });
+                    } else {
+                        ref.update({
+                            "RED_LED_STATUS": "ON",
+                            "GREEN_LED_STATUS": "OFF"
+                        });
+                    }
+                }
+        
+                function fetchWeatherAndUpdateLED() {
+                const apiUrl = 'https://api.weather.gov/points/42.3601,-71.0589';
+        
+                fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                const forecastUrl = data.properties.forecastHourly;
+        
+                // Fetch the hourly forecast data from the forecast URL
+                fetch(forecastUrl)
+                .then(response => response.json())
+                .then(data => {
+                const currentHourlyForecast = data.properties.periods[0];
+        
+                // Create HTML to display the current hourly forecast
+                const forecastHtml = `
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="card-text">Temperature: ${currentHourlyForecast.temperature} °F</p>
+                                        <p class="card-text">Forecast: ${currentHourlyForecast.shortForecast}</p>
+                                    </div>
+                                </div>
+                        `;
+        
+                // Update the HTML content of the current hourly forecast container
+                document.getElementById('currentHourlyForecast').innerHTML = forecastHtml;
+        
+                // Check if the temperature is above 60 Fahrenheit
+                const temperatureFahrenheit = parseInt(currentHourlyForecast.temperature);
+                if (temperatureFahrenheit > 30) {
+                    ref.update({
+                    "YELLOW_LED_STATUS": "ON",
+                    });
+                }
+                else {
+                    ref.update({
+                    "YELLOW_LED_STATUS": "OFF",
+                    });
+                }
+                })
+                    .catch(error => console.error('Error fetching hourly forecast:', error));
+                })
+                    .catch(error => console.error('Error fetching forecast URL:', error));
+                }
+                window.onload = fetchWeatherAndUpdateLED;
+        </script>-->
                 </xmp>
                 <p></p>
             </div>
