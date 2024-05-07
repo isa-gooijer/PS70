@@ -120,7 +120,7 @@ Sweeper motor1(15);
 
 void setup() {
   Serial.begin(9600);
-  motor1.Attach(7);
+  motor1.Attach(10);
 }
 
 void loop() {
