@@ -101,14 +101,16 @@
                     <p>First, I followed the tutorial on <a href="https://learn.adafruit.com/multi-tasking-the-arduino-part-1/overview">Arduino Multitasking</a> 
                     by <i>adafruit</i>. this taught me how to use the millis() function instead of the delay() function in Arduino/C++. I 
                     also learned how to use an OOP which makes it easy to repeat a function (e.g., turn multiple LEDs on and off). I did followed along with each 
-                    step until I finally had 3 LEDs and 1 servomotor functioning at the same time. Furthermore, I also used </p>
+                    step until I finally had 3 LEDs and 1 servomotor functioning at the same time (like in the tutorial). Additionally, I 
+                    added a button that would stop the blinking of the green LED and the movement of the servomotor (while the blue and red 
+                    LED continue blinking).</p>
 
                     <p>My Arduino code can be viewed/downloaded below: <br>
                         <ul>
                             <li><a href="./BLINK_without_delay/BLINK_without_delay.ino" download>Blink without delay</a></li>
                             <li><a href="./Blink_without_delay_2LEDs/" download>Blink OOP without delay: 2 LEDs</a></li>
                             <li><a href="./Blink_OOP_wo_delay/Blink_OOP_wo_delay.ino" download>Blink OOP without delay</a></li>
-                            <li><a href="./ServoMotor_OOP/ServoMotor_OOP.ino" download>3 LEDs and 1 servomotor OOP without delay</a></li>                            
+                            <li><a href="./ServoMotor_OOP/ServoMotor_OOP.ino" download>3 LEDs and 1 servomotor and button OOP without delay</a></li>                            
                             <li><a href="./Multitask/Multitask.ino" download>Multitask with buttons</a></li>
                         </ul>
                     </p>
@@ -116,11 +118,15 @@
                     <p>Photo of the Arduino circuit with 3 LEDs:<br>
                         <img src="./IMG_6734.jpg" class="img-fluid" alt="Arduino circuit with 3 LEDs"><br>
                         
-                        A video of the 3 LEDs + the servomotor blinking and sweeping at the same time: <br>
+                        A video of the 3 LEDs + the servomotor blinking and sweeping at the same time (like in the tutorial): <br>
                         <video controls class="img-fluid" style="width:50%; height:50%;">
                         <source src="./IMG_6735.MOV" type="video/mp4"></video><br>
                         
-                        Arduino Code for this circuit:
+                        A video of the 3 LEDs + servomotor + button that stops blink of green LED and movement of servomotor:
+                        <video controls class="img-fluid" style="width:50%; height:50%;">
+                        <source src="./IMG_7665.MOV" type="video/mp4"></video><br>
+
+                        Arduino Code for this latter circuit (with button):
                         <pre><code class="language-arduino">
             #include &ltServo.h&gt
 

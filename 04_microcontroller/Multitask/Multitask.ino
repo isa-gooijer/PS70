@@ -27,6 +27,7 @@ void loop() {
 
 } */
 
+#include <Servo.h> 
 
 class Button{
   // Member variables
@@ -69,13 +70,57 @@ class Light{
   }
 };
 
+class Sweeper{
+  Servo servo;  // the servo
+  int pos; // current servo position
+  int increment; //increment to move for each interval
+  int updateInterval; //interval between updates (in milliseconds)
+  unsigned long lastUpdate; //last update of position (in milliseconds)
+
+  //CONSTRUCTOR
+  public:
+  Sweeper(int interval){
+    updateInterval = interval;
+    increment = 1;
+  }
+
+  void Attach(int pin){
+    servo.attach(pin);
+  }
+
+  void Detach(){
+    servo.detach();
+  }
+
+  void Update(int buttonState){
+    if (buttonState == LOW) {
+      // check if time to update
+      if(millis() - lastUpdate > updateInterval){
+        lastUpdate = millis(); // remember time
+        pos += increment; // increase/change position
+        servo.write(pos); // change position of Servo motor
+        Serial.println(pos); // print the position in serial monitor
+        
+        //end of sweep when degree is 180 or 0.
+        if((pos >= 180) || (pos <=0)){
+          // reverse direction
+          increment = -increment;
+        }
+      }
+    }    
+  }
+}; 
+
+
 
 Button ledButton(4);
 Button motorButton(5);
 Light led1(6);
+Sweeper motor1(15);
 
 void setup() {
   Serial.begin(9600);
+  motor1.Attach(7);
 }
 
 void loop() {
@@ -85,4 +130,5 @@ void loop() {
   Serial.println(motorButton.Update());
 
   led1.Update(ledButton.Update());
+  motor1.Update(motorButton.Update());
 }
