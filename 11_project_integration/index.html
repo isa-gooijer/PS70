@@ -59,6 +59,7 @@
                       <li><a class="dropdown-item" href="../08_CNC/index.html">08 - CNC Miling</a></li>
                       <li><a class="dropdown-item" href="../09_networking/index.html">09 - Radio, WiFi & Bluetooth</a></li>
                       <li><a class="dropdown-item" href="../10_machine/index.html">10 - Machine Building & Effectors</a></li>
+                      <li><a class="dropdown-item" href="../11_project_integration/index.html">11 - Project Integration</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="../finalproject/index.html">Final Project</a></li>
                     </ul>
@@ -169,8 +170,89 @@
                     <b>With pump, plant cup and water bottle:</b>
                     <img src="./assembled_pump.jpg" class="img-fluid">
                     <p></p>
-
                   </p>
+                  <p></p>
+                  <p><h4>CODING:</h4>
+                  I used the code below to test if my input values and calculated from the sensor and pump were correct/made sense.</p>
+                  <pre><code class="language-arduino">
+      // SOIL MOISTURE - CALIBRATION
+      // TEST THE PUMP - SOIL MOISTURE SENSOR CODE
+
+      class SoilMoist {
+        // CLASS MEMBER VARIABLES
+        // variables that are initialized at startup
+        int SM_pin; //soil moisture sensor pin
+        int interval; // interval at which soil moisture values is read
+
+        float desired_wc; // the desired water content by weight (wc_d)
+
+        float b_dry_soil; // soil moisture sensor value from dry soil.
+        float soil_max_wc; // the water content of saturated soil, refer to calibration curve. 
+        float a_slope; // the slope from the linear fitted line from calibration.
+        float speed_pump; // how many mL/s are moved by the pump. (seconds)
+        // weight the dry soil (doesn't need to be from calibration)
+        int dry_weight;
+        
+        // variables that maintain current state
+        int y_soil_sensor; // value from the soil moisture sensor
+
+        float x_current_wc; // current water content by weight (wc_c). This is x from y = a*x + b (y_soil_sensor = a_slope * x + b_dry_soil).
+        float delta_water_vol; // change in water volume, aka how much mL needs to be added/pumped.
+        int time_pump; // time pump is on to get desired water content. (in milliseconds)
+
+        unsigned long lastUpdate; // last update (in milliseconds)
+
+        public:
+        SoilMoist(int SENSOR, int INT,  float a, float b, int W_d, float soilMAX_wc, float desiredWC, float PUMPspeed){
+          SM_pin = SENSOR;
+          interval = INT;
+          a_slope = a;
+          b_dry_soil = b;
+          dry_weight = W_d;
+          soil_max_wc = soilMAX_wc;
+          desired_wc = desiredWC;
+          speed_pump = PUMPspeed;
+          
+          //pinMode(ledPin, OUTPUT); // set LED pin to an OUTPUT
+          //pinMode(pumpPin, OUTPUT); // set pump pin to an OUTPUT
+          lastUpdate = 0; // start clock at zero
+        }
+
+        void Update(){
+          // check to see if it's time to read of the soil moisture value
+          if(millis() - lastUpdate >= interval){
+            lastUpdate = millis();
+            y_soil_sensor = analogRead(SM_pin);
+            x_current_wc = (analogRead(SM_pin) - b_dry_soil) / a_slope; // x = (y-b)/a where y is value from sensor, a and b are derived from the calibration of the sensor.
+            delta_water_vol = (dry_weight/(1 - desired_wc)) - (dry_weight/(1 - x_current_wc));
+            time_pump = delta_water_vol / speed_pump * 1000; // *1000 to get milliseconds.
+
+            Serial.println("NEW MEASUREMENT");
+            Serial.println("Interval: " + String(interval));
+            Serial.println("a_slope: " + String(a_slope));
+            Serial.println("b_dry_soil: " + String(b_dry_soil));
+            Serial.println("dry weight: " + String(dry_weight));
+            Serial.println("soil_max_wc: " + String(soil_max_wc));
+            Serial.println("desired_wc: " + String(desired_wc));
+            Serial.println("Sensor Value:" + String(y_soil_sensor));
+            Serial.println("current_cw: " + String(x_current_wc));
+            Serial.println("delta_water_vol: " + String(delta_water_vol));
+            Serial.println("time_pump: " + String(time_pump/1000));
+
+          }
+        }
+      };
+
+      SoilMoist sm1(4, 8000, -2363.4, 2675.2, 100, 0.436, 0.35, 2.3); // pin = A0; interval = 1000 ms.
+
+      void setup() {
+      Serial.begin(9600);
+      }
+
+      void loop() {
+        sm1.Update();
+      }
+                  </code></pre>
                 </div>
             </div>
         </div>
