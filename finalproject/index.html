@@ -59,6 +59,7 @@
                       <li><a class="dropdown-item" href="../08_CNC/index.html">08 - CNC Miling</a></li>
                       <li><a class="dropdown-item" href="../09_networking/index.html">09 - Radio, WiFi & Bluetooth</a></li>
                       <li><a class="dropdown-item" href="../10_machine/index.html">10 - Machine Building & Effectors</a></li>
+                      <li><a class="dropdown-item" href="../11_project_integration/index.html">11 - Project Integration</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="../finalproject/index.html">Final Project</a></li>
                     </ul>
@@ -75,21 +76,22 @@
                   <b>Project Proposal: </b>
                   <a href="../01_intro/index.html">Week 1: Intro</a> <br>
                   <b>Project Progress: </b>
-                  <a href="../11_project_integration/index.html">Week 11: Project Integration</a><br>
+                  <a href="../11_project_integration/index.html">Week 11: Project Integration</a><br><br>
               </div>
             </div>
         </div>
 
         <div class="container-fluid text-start">
             <div class="row justify-content-center">
-                <div class="col-6">
-                    An automated watering system that updates at a chosen interval. The program will automatically calculate 
-                    how much water (mL) needs to be added to reach the desired water content. It also automatically drives the 
-                    peristaltic pump and runs it for the required time to add the extra water to the soil. The system requires 
-                    calibration of the soil moisture sensor to the type of soil. Furthemore, it requires the pump speed (mL/s) 
-                    of the peristaltic pump is determined for the used power level. Additionally, there is an LED that will turn on 
-                    if the water content in the soil is higher than the maximum content. This means something has gone wrong and the 
-                    soil is oversaturated (more water than the soil can hold onto).
+                <div class="col-8">
+                    An automated watering system that updates at a <i>chosen interval</i>. The program will measure the current soil moisture 
+                    and automatically calculate how much water (mL) needs to be added to reach the desired <i>water content</i>. 
+                    It also automatically drives the <b>peristaltic pump</b> and runs it for the required time to add the extra water 
+                    to the soil. The system requires <i>calibration</i> of the <b>soil moisture sensor</b> to the type of soil. 
+                    Furthemore, it requires the pump speed (mL/s) of the peristaltic pump is determined for the used power level. 
+                    Additionally, there is a <b>red LED</b> that will turn on if the water content in the soil is higher than the 
+                    maximum content. This means something has gone wrong and the soil is oversaturated (more water than the soil can hold onto).
+                    <br><br>
                 </div>
             </div>
         </div>
@@ -100,11 +102,12 @@
                   <h2>HOW IT WORKS: A Demonstration Video</h2>
                   <p>The program runs every 30 seconds. It reads the soil moisture in the soil, determines if it is too low, 
                     calculates how much water needs to be added and turns on the peristaltic pump for that required time. It also 
-                    checks if the soil moisture is above the max (saturation of soil) and turns on a warning LED if it is.<br><br>
+                    checks if the soil moisture is above the max (saturation of soil) and turns on a warning LED if it is.<br>
                     Check out the different responses for <b>dry soil</b>, <b>wet soil</b>, and <b>pure water</b>.
                   </p>
-                  <video controls class="img-fluid" style="width:50%; height:50%;">
-                  <source src="./" type="video/mp4"></video>
+                  <p><b>LINK TO VIDEO IN <a href="https://drive.google.com/file/d/1TIxbeobQa5rUTlNJnhcrZFWUyF1o9GzU/view?usp=drive_link" target="_blank">GOOGLE DRIVE<br>
+                    <img src="./Demo_video_title_still.jpg" class="img-fluid" style="width: 50%; height: 50%;">
+                  </a></b></p>
                   <p>This video is to show how program works. It is meant to demonstrate that the peristaltic pump (and LED) responds 
                     to different levels of soil moisture and that the program can cal calculate and add the correct water amount (mL) 
                     to reach the desired water content/soil moisture. However, in actual use the program would update less frequently (hours) 
@@ -112,23 +115,44 @@
                   </p>
 
                   <p></p>
-                  <p>TODO: pictures of finished product</p>
+                  <h4>Pictures of finished product:</h4>
+                  <p>Front view (open front)
+                    <img src="./box_pump_sensor_openfront.jpg" class="img-fluid">
+                  </p>
+                  <p>Top view
+                    <img src="./box_pump_sensor_topview.jpg" class="img-fluid">
+                  </p>
+                  <p>Back view: wiring (open back)
+                    <img src="./Wiring_box_openback.jpg" class="img-fluid">
+                  </p>
 
                   <p></p>
                   <h3>A Box without Glue: Easily Build and Taken Apart!</h3>
-                  <p>TODO:
+                  No glue, no screws, just cartboard and Mortise and Tenon joints. Easy to assembled and easy to take apart.<br>
+                  <p>
+                    Download the <a href="./Final_project_box.stl" download>STL file</a>
+                    <iframe src="https://college269.autodesk360.com/shares/public/SHd38bfQT1fb47330c99f000e15812a7289d?mode=embed" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
+                  </p>
+                  <p>Dowload the DFX files:
                     <ul>
-                      <li>Files avaible for download: DFX and Fusion</li>
-                      <li>Embedded Fusion model</li>
-                      <li>pictures of how to assemble</li>
-                      <li>picture empty</li>
-                      <li>picture full</li>
+                      <li><a href="./IsaG_V1_bottom_lasercut.dxf">Bottom</a></li>
+                      <li><a href="./IsaG_V1_width_lasercut.dxf">Width</a> (2x)</li>
+                      <li><a href="./IsaG_V1_lenght_front_lasercut.dxf">Front</a></li>
+                      <li><a href="./IsaG_V1_lenght_back_lasercut.dxf">Back</a></li>
+                      <li><a href="./IsaG_V1_middlepiece_lasercut.dxf">Middle Piece</a></li>
+                      <li><a href="./IsaG_V1_motor_plateau.dxf">Motor Plateau</a></li>
                     </ul>
+                    <br>
+                    <img src="../11_project_integration/assembled_empty_side.jpg" class="img-fluid"><br><br>
+                    <img src="../11_project_integration/unassembled_ALL_pieces.jpg" class="img-fluid"><br>
+                    <br>
+                    For assembly of the box check out the final project <a href="../11_project_integration/index.html">progress page</a>! 
+                    Make sure to do the wiring before pushing in the back plate.
                   </p>
 
                   <h3>Calibration of the Soil Moisture Sensor:</h3>
                   <p></p>
-                  <p>Needed:
+                  <p><u><b>Needed:</b></u>
                     <ul>
                       <li>Arduino or ESP32C3 with wiring, cable, etc.</li>
                       <li>Soil Moisture Sensor (obviously)</li>
@@ -143,54 +167,90 @@
                   </p>
                   <p>
                     <b>Step 1: Set up the soil moisture sensor</b><br>
-                    Use the schematic and code below. Measure and save the sensor value in air and pure water.<br><br>
+                    Use the schematic and code below. Measure and save the sensor value in air and pure water.
+                    Download the <a href="./Soil_moist_calibrate.ino" download>calibration code</a><br><br>
                     <b>Step 2:</b><br>
                     Prepare the cup. Put the coffee filter in the cup and secure to cup with tape.<br>
-                    Save the weight.<br><br>
+                    Save the weight.<br>
+                    <img src="./soil_moist_calibration_setup_nosoil.jpg" class="img-fluid">
+                    <br><br>
                     <b>Step 3:</b><br>
                     Add soil, push down on it sligtly, measure and save the weight (dry_weight). Add the soil moisture sensor. Wait 
-                    2 minutes then save the soil moisture sensor value.<br><br>
+                    2 minutes then save the soil moisture sensor value.<br>
+                    <img src="./soil_moist_calibration_setup_dry.jpg" class="img-fluid"><br><br>
                     <b>Step 4:</b><br>
-                    Add 15 mL of water to the soil, distribute evenly. Wait 2 minutes and save value.<br><br>
+                    Add 15 mL of water to the soil, distribute evenly. Wait 2 minutes and save value.<br>
+                    <img src="./soil_moist_calibration_1.jpg" class="img-fluid">
+                    <br><br>
                     <b>Step 5:</b><br>
                     Repeat step 4 until the coffee filter starts dripping from the bottom. This means the soil is saturated and 
-                    cannot hold more water.<br><br>
+                    cannot hold more water.<br>
+                    <img src="./soil_moist_calibration_leaking.jpg" class="img-fluid">
+                    <img src="./soil_moist_calibration_leaking_closeup.jpg" class="img-fluid"><br><br>
                     <b>Step 6:</b><br>
                     Calculate the water content (by weight) in excel.<br>
                     <i>water content (wc) = (Weight_dry - Weight_total) / Weight_total <br>
-                    wc = (W_d - W_tot) / W_tot <br>
+                    wc = (W_tot - W_d) / W_tot <br>
                     wc = added water (mL) / (weight of dry soil + added water)</i><br><br>
                     <b>Step 7:</b> Make a graph and retrieve a formula<br>
                     Make a graph in excel with water content on the x axis and soil moisture sensor value on the y-axis. Create a 
                     linear trendline and display the formula. Determine and save <i>a</i> and <i>b</i> from the formula <i>y = ax + b</i>.<br>
-                    TODO: picture of graph in excel.
+                    <img src="./sensor_calibration_curve.png" class="img-fluid">
                   </p>
 
                   <h3>Determining Speed of the Peristaltic Pump:</h3>
-                  <p>Needed:
+                  <p><u><b>Needed:</b></u>
                     <ul>
-                      <li>
                         <li>Arduino or ESP32C3 with wiring, cable, etc.</li>
                         <li>Peristaltic pump</li>
                         <li>Bottle with water</li>
                         <li>Empty plastic cup</li>
                         <li>Scale</li>
-                      </li>
                     </ul>
                   </p>
                   <p><b>Step 1:</b> Set up the peristaltic pump<br>
-                  Use the schematic and code below to set up the peristaltic pump for testing.<br><br>
+                  Use the schematic and code below to set up the peristaltic pump for testing.
+                  Download the <a href="./Peristaltic_pump_calibrate.ino" download>calibration code</a><br><br>
                   <b>Step 2:</b><br>
                   Let the peristaltic pump run for 5 seconds at different power levels (0-255). Determine the amount of 
                   water that is being pumped in 5 seconds (determine weight with a scale).<br><br>
-                  <b>Step 3:</b><br>
+                  <b>Step 3:</b>
+                  Repeat 4 times and determine the average over 4 trials.<br><br>
+                  <b>Step 4:</b><br>
                   Convert to mL/s by diving volume by time (5s). Determine what power level you like/want to use and save 
-                  that value for later.
+                  that value for later.<br>
+                  <img src="./pump_table.png" class="img-fluid"><br><br>
+                  <img src="./pump_calibration_curve.png" class="img-fluid">
                   </p>
 
-                  <h3>ESP32C3 CODE: Soil Moisture Sensor and Peristaltic Pump Working Together!</h3>
-                  <p></p>
-                  <p></p>
+                  <h3>ESP32C3 CODE: Soil Moisture Sensor and Peristaltic Pump Working Together!</h3><br>
+                  <p><u><b>Needed:</b></u>
+                    <ul>
+                      <li>Values <b><i>a</i></b> and <b><i>b</i></b> from soil moisture sensor calibration</li>
+                      <li>Max water content (when soil is saturate) from soil moisture sensor calibration</li>
+                      <li>Pump speed from peristaltic pump calibration</li>
+                      <li>Pin for sensore, pump and LED</li>
+                      <li>Dry weight of the soil in the cup (before it was ever watered).</li>
+                      <li>Choose desired water content (by weight, <i>e.g., 0.35 so 35% of the total weight is water</i>); must be 
+                      below the max water content/saturation value.</li>
+                    </ul>                  
+                  </p>
+                  <u><b>Calculations explained:</b></u><br>
+                  <i><b>y = ax + b</b></i> where <b>y</b> is the value measure by the moisture sensor, <b>a</b> is the slope and 
+                  <b>b</b> is the sensor value for dry soil (a and b determined at calibration). Solve for <b>x</b> to get the <i>water content</i>.
+                  <br>
+                  <i><b>x = (y - b) / a</b></i>
+                  <br><br>
+                  Get the amount of water to add to get the desired water content:<br>
+                  <b><i>Water to add (mL) = (W_d/(1-wc_desired)) - (W_d/(1-wc_current))</i></b><br>
+                  <br>
+                  Deriving the formula:<br>
+                  Known variables are <b>y</b> (sensor value, soil moisture), <b>x</b> (water content, <b>wc</b>), and dry weight (<b>W_d</b>) 
+                  (measured at calibration). Want to get the total weight (W_tot) of soil + water at a given point.<br>
+                  <i>water content (wc) = (W_tot - W_d) / W_tot</i> and we want to know W_tot (total weight).<br><br>
+                  <img src="./delta_water_vol_derive.jpg" class="img-fluid"><br><br>
+
+                  <p>Download the <a href="./Soil_pump_calibrate_EPS32C3/Soil_pump_calibrate_EPS32C3.ino" download>final ESP32C3 code</a>!</p>
                   <p>
                     <pre><code class="language-arduino">
       // SOIL MOISTURE - PERISTALTIC PUMP - CALIBRATED
@@ -204,7 +264,7 @@
         int ledPin; // pin of LED
         int pumpPin; // pin of pump
         
-        //GET THESE VALUES FROM FIREBASE
+        //GET THESE VALUES
         // higher value is in air, lower value in water
         int interval; // interval at which soil moisture values is read (milliseconds)
         float desired_wc; // the desired water content by weight (wc_d)
